@@ -1,0 +1,30 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.TB {
+  margin: 0;
+  height: 1080px;
+  width: 100%;
+  overflow: hidden;
+  background-image: url('/static/images/back-image.jpg');
+  background-size: 100% 100%;
+}
+
+.TB_Header {
+  background-color: #292828;
+  color: white;
+  margin: 0;
+  height: 6%;
+  overflow: hidden;
+  border-bottom: 3px solid #2e2e2e;
+}
+
+.TB_Header_Logo {
+  font-size: 24px;
+  font-family: 'Cursive';
+}

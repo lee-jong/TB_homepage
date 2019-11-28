@@ -1,12 +1,15 @@
+// # library
 import React from 'react';
-import NavBar from '../shared/NavBar';
+
+// # Component
 import Meta from '../shared/Meta';
+import Header from '../shared/Header';
 
 const BaseLayout = ({ children }) => {
   return (
     <>
-      {/* <Meta />
-      <NavBar /> */}
+      <Meta />
+      <Header />
       {children}
     </>
   );

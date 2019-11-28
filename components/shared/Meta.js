@@ -1,9 +1,15 @@
-import React from "react";
-import Head from "next/head";
+// # library
+import React from 'react';
+import Head from 'next/head';
+
+// # Bootstrap & CSS
+import '../../static/styles/css/reset.css';
+import '../../static/styles/css/TB.css';
+
 const Meta = () => {
   return (
     <Head>
-      <title>Bolierplate</title>
+      <title>TwoBell Home Page</title>
     </Head>
   );
 };
