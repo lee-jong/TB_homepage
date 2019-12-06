@@ -1,14 +1,43 @@
 import React from 'react';
 import Link from 'next/link';
 
-const Header = () => {
-  return (
-    <>
-      <div className="TB_Header">
-        <div className="TB_Header_Logo">TwoBell</div>
-      </div>
-    </>
-  );
-};
+// # Component
+import SideMenu from '../../components/shared/SideMenu';
+
+class Header extends React.Component {
+  state = {
+    sideMenu: false
+  };
+
+  handleSideMenu = () => {
+    this.setState({
+      sideMenu: !this.state.sideMenu
+    });
+  };
+
+  render() {
+    const { sideMenu } = this.state;
+    return (
+      <>
+        <div className="TB_Header">
+          <img
+            src="/static/images/twobell.png"
+            className="TB_Header_Logo"
+          ></img>
+          <img
+            src="/static/images/menu.png"
+            className="TB_Menu_icon"
+            onClick={this.handleSideMenu}
+          ></img>
+        </div>
+        <SideMenu sideMenu={sideMenu} handleSideMenu={this.handleSideMenu} />
+
+        {/* {sideMenu && (
+          <SideMenu sideMenu={sideMenu} handleSideMenu={this.handleSideMenu} />
+        )} */}
+      </>
+    );
+  }
+}
 
 export default Header;

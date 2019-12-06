@@ -10,15 +10,17 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    return { pageProps };
+    let path = ctx.pathname;
+
+    return { pageProps, path };
   }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, path } = this.props;
     return (
       <Container>
         <div className="TB">
-          <BaseLayout>
+          <BaseLayout path={path}>
             <Component {...pageProps} />
           </BaseLayout>
         </div>

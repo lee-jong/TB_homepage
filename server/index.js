@@ -8,12 +8,6 @@ const handle = routes.getRequestHandler(app);
 const config = require('./config');
 const middlewares = require('./middlewares');
 
-app.use('/js', express.static(__dirname + '../node_modules/bootstrap/dist/js'));
-app.use(
-  '/css',
-  express.static(__dirname + '../node_modules/bootstrap/dist/css')
-);
-
 app
   .prepare()
   .then(() => {
