@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const axiosInstance = axios.create({
-  baseURL: 'https://jsonplaceholder.typicode.com',
+export const axiosInstance = axios.create({
+  baseURL: 'http://localhost:4000',
   timeout: 3 * 1000
 });
 
-const handleError = err => {
+export const handleError = err => {
   let error = {};
 
   if (err && err.response && err.response.data) {
@@ -17,19 +17,4 @@ const handleError = err => {
   return Promise.reject(error);
 };
 
-const handleSuccess = res => res.data;
-
-// ----------------- POST ACTIONS -----------------
-export const getPosts = async () => {
-  return axiosInstance
-    .get('/posts')
-    .then(handleSuccess)
-    .catch(handleError);
-};
-
-export const getPostById = async id => {
-  return axiosInstance
-    .get(`/posts/${id}`)
-    .then(handleSuccess)
-    .catch(handleError);
-};
+export const handleSuccess = res => res.data;

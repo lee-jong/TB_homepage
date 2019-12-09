@@ -316,6 +316,33 @@ body,
   padding-left: 4%;
 }
 
+.TB_developer_footer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.TB_developer_create_button {
+  padding-top: 2.5%;
+  width: 10%;
+}
+
+.TB_developer_create_button button {
+  background-color: #797171; /* Green */
+  border: none;
+  color: #b4acac;
+  text-shadow: 0 0 0.3em, 0 0 0.9em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.TB_developer_create_button button:hover {
+  text-shadow: 0 0 3.3em, 0 0 9.9em;
+}
+
 /* Pagination CSS */
 .TB_pagination {
   width: 100%;
@@ -325,7 +352,7 @@ body,
   display: flex;
   text-align: center;
   padding-top: 2.5%;
-  padding-left: 32%;
+  padding-left: 40%;
 }
 .TB_paging_button {
   width: 7%;
@@ -361,4 +388,37 @@ body,
 
 .TB_paging_button_number a:hover {
   text-shadow: 0 0 1.9em, 0 0 2.4em;
+}
+
+/* Developer Popup CSS */
+
+.TB_developer_popup {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 9999999999999; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(98, 105, 99, 0.527); /* Fallback color */
+  background-color: rgba(98, 105, 99, 0.527); /* Black w/ opacity */
+}
+
+.TB_developer_popup_box {
+  background-size: 100%;
+  height: 60%;
+  background-color: #b4acac;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  color: white;
+  z-index: 9999999999999;
+  overflow: scroll;
+}
+
+.TB_developer_popup_close {
+  cursor: pointer;
 }

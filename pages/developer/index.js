@@ -1,95 +1,58 @@
 // # Library
 import React from 'react';
 
-// # Utill & Module
-import Pagintaion from '../../helpers/module/pagination';
+// # Action
+import { getDeveloperList } from '../../actions/developer';
+
+// # Component
+import DeveloperList from '../../components/dump/developer/DeveloperList';
+import P_Developer from '../../components/popup/P_Developer';
 
 class Developer extends React.Component {
+  static async getInitialProps({}) {
+    let developerList = {};
+    let data = {
+      active: 1
+    };
+
+    try {
+      developerList = await getDeveloperList(data);
+    } catch (err) {
+      developerList = { result: [], total: 0 };
+    }
+    return { developerList };
+  }
+
+  state = {
+    res: {
+      list: this.props.developerList.result,
+      total: this.props.developerList.total
+    },
+    popup: {
+      developer: false
+    }
+  };
+
+  openPopup = name => {
+    this.setState({
+      popup: {
+        ...this.state.popup,
+        [name]: true
+      }
+    });
+  };
+
   render() {
+    const { res, popup } = this.state;
+    console.log('this', this.state);
     return (
       <>
         <div className="TB_developer">
           <div className="TB_developer_main">
             <div className="TB_developer_header">Developer Note</div>
-            <div className="TB_developer_content">
-              <table className="TB_developer_table">
-                <thead>
-                  <tr className="TB_developer_table_tr">
-                    <td className="TB_developer_table_td">No.</td>
-                    <td className="TB_developer_table_td">Title</td>
-                    <td className="TB_developer_table_td">Content</td>
-                    <td className="TB_developer_table_td">Date</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="TB_developer_table_tr">
-                    <td className="TB_developer_table_td">1</td>
-                    <td className="TB_developer_table_td">Title</td>
-                    <td className="TB_developer_table_td">Content</td>
-                    <td className="TB_developer_table_td">Date</td>
-                  </tr>
-                  <tr className="TB_developer_table_tr">
-                    <td className="TB_developer_table_td">2</td>
-                    <td className="TB_developer_table_td">Title</td>
-                    <td className="TB_developer_table_td">Content</td>
-                    <td className="TB_developer_table_td">Date</td>
-                  </tr>
-                  <tr className="TB_developer_table_tr">
-                    <td className="TB_developer_table_td">3</td>
-                    <td className="TB_developer_table_td">Title</td>
-                    <td className="TB_developer_table_td">Content</td>
-                    <td className="TB_developer_table_td">Date</td>
-                  </tr>
-                  <tr className="TB_developer_table_tr">
-                    <td className="TB_developer_table_td">4</td>
-                    <td className="TB_developer_table_td">Title</td>
-                    <td className="TB_developer_table_td">Content</td>
-                    <td className="TB_developer_table_td">Date</td>
-                  </tr>
-                  <tr className="TB_developer_table_tr">
-                    <td className="TB_developer_table_td">5</td>
-                    <td className="TB_developer_table_td">Title</td>
-                    <td className="TB_developer_table_td">Content</td>
-                    <td className="TB_developer_table_td">Date</td>
-                  </tr>
-                  <tr className="TB_developer_table_tr">
-                    <td className="TB_developer_table_td">6</td>
-                    <td className="TB_developer_table_td">Title</td>
-                    <td className="TB_developer_table_td">Content</td>
-                    <td className="TB_developer_table_td">Date</td>
-                  </tr>
-                  <tr className="TB_developer_table_tr">
-                    <td className="TB_developer_table_td">7</td>
-                    <td className="TB_developer_table_td">Title</td>
-                    <td className="TB_developer_table_td">Content</td>
-                    <td className="TB_developer_table_td">Date</td>
-                  </tr>
-                  <tr className="TB_developer_table_tr">
-                    <td className="TB_developer_table_td">8</td>
-                    <td className="TB_developer_table_td">Title</td>
-                    <td className="TB_developer_table_td">Content</td>
-                    <td className="TB_developer_table_td">Date</td>
-                  </tr>
-                  <tr className="TB_developer_table_tr">
-                    <td className="TB_developer_table_td">9</td>
-                    <td className="TB_developer_table_td">Title</td>
-                    <td className="TB_developer_table_td">Content</td>
-                    <td className="TB_developer_table_td">Date</td>
-                  </tr>
-                  <tr className="TB_developer_table_tr">
-                    <td className="TB_developer_table_td">10</td>
-                    <td className="TB_developer_table_td">Title</td>
-                    <td className="TB_developer_table_td">Content</td>
-                    <td className="TB_developer_table_td">Date</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <div className="TB_pagination">
-                <Pagintaion total={1} activeProps={1} />
-              </div>
-            </div>
+            <DeveloperList res={res} openPopup={this.openPopup} />
           </div>
+          {popup.developer && <P_Developer />}
         </div>
       </>
     );
