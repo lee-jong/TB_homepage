@@ -1,12 +1,17 @@
 import React from 'react';
 
-const MainDevaloperBoard = () => {
+const MainDevaloperBoard = ({ goToPage }) => {
   return (
     <>
       <div className="TB_main_board">
         <div className="TB_main_board_header">
           <div className="TB_main_board_title">Devaloper Note</div>
-          <div className="TB_main_board_more">More</div>
+          <div
+            className="TB_main_board_more"
+            onClick={() => goToPage('devaloper')}
+          >
+            More
+          </div>
         </div>
         <div className="TB_main_board_content">
           <ul className="TB_main_board_content_item">

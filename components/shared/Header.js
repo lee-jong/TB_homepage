@@ -19,7 +19,16 @@ class Header extends React.Component {
     const { sideMenu } = this.state;
     return (
       <>
-        <div className="TB_Header">
+        <div className="TB_header">
+          <div className="TB_main_logo">
+            <img
+              className="TB_main_logo_img"
+              src="/static/images/twobell.png"
+            />
+          </div>
+        </div>
+
+        {/* <div className="TB_Header">
           <img
             src="/static/images/twobell.png"
             className="TB_Header_Logo"
@@ -30,7 +39,7 @@ class Header extends React.Component {
             onClick={this.handleSideMenu}
           ></img>
         </div>
-        <SideMenu sideMenu={sideMenu} handleSideMenu={this.handleSideMenu} />
+        <SideMenu sideMenu={sideMenu} handleSideMenu={this.handleSideMenu} /> */}
 
         {/* {sideMenu && (
           <SideMenu sideMenu={sideMenu} handleSideMenu={this.handleSideMenu} />

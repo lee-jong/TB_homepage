@@ -9,7 +9,8 @@ const BaseLayout = ({ children, path }) => {
   return (
     <>
       <Meta />
-      {path !== '/' && <Header />}
+      <Header />
+      {/* {path !== '/' && <Header />} */}
       {children}
     </>
   );

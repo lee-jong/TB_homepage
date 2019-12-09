@@ -16,15 +16,8 @@ body {
 }
 
 /* Header CSS */
-.TB_Header {
-  /* background-color: #2e8ef4; */
-  color: white;
-  margin: 0;
-  height: 6%;
-  overflow: hidden;
-  /* border-bottom: 3px solid #2e2e2e; */
+.TB_header {
   text-align: center;
-  /* background-image: url('/static/images/header-image.jpeg'); */
 }
 
 .TB_Header_Logo {
@@ -185,6 +178,82 @@ body {
 }
 
 .TB_main_board_content_dat {
+  margin-top: 4%;
+  color: #b4acac;
+  font-size: 12px;
+  text-shadow: 0 0 0.1em, 0 0 0.1em;
+}
+
+/* Main Info Board CSS */
+.TB_main_info {
+  width: 100%;
+  height: 100%;
+}
+
+.TB_main_info_header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 6%;
+  color: #b4acac;
+  font-size: 15px;
+  text-shadow: 0 0 0.1em, 0 0 0.1em;
+}
+
+.TB_main_info_header_title {
+  padding-left: 3%;
+}
+
+.TB_main_info_header_more {
+  padding-right: 3%;
+}
+
+.TB_main_info_content {
+  padding-top: 14%;
+  color: #b4acac;
+  font-size: 15px;
+  text-shadow: 0 0 0.1em, 0 0 0.1em;
+}
+
+/* Main Guest Book CSS */
+.TB_main_guestBook {
+  width: 100%;
+  height: 100%;
+}
+
+.TB_main_guestBook_header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 6%;
+  color: #b4acac;
+  font-size: 15px;
+  text-shadow: 0 0 0.1em, 0 0 0.1em;
+}
+
+.TB_main_guestBook_header_title {
+  padding-left: 3%;
+}
+
+.TB_main_guestBook_header_more {
+  padding-right: 3%;
+}
+
+.TB_main_guestBook_content {
+  padding-top: 14%;
+  color: #b4acac;
+  font-size: 12px;
+  text-shadow: 0 0 0.1em, 0 0 0.1em;
+}
+
+.TB_main_guestBook_content_item {
+  margin-top: 4%;
+  display: flex;
+  justify-content: space-around;
+  color: #b4acac;
+  font-size: 12px;
+  text-shadow: 0 0 0.1em, 0 0 0.1em;
+}
+
+.main_guestBook_content_dat {
   margin-top: 4%;
   color: #b4acac;
   font-size: 12px;
