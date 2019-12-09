@@ -8,7 +8,7 @@ const MainDevaloperBoard = ({ goToPage }) => {
           <div className="TB_main_board_title">Devaloper Note</div>
           <div
             className="TB_main_board_more"
-            onClick={() => goToPage('devaloper')}
+            onClick={() => goToPage('developer')}
           >
             More
           </div>
