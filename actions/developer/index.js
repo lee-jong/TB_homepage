@@ -9,8 +9,6 @@ export const getDeveloperList = async option => {
     limit: getDeveloperLimit
   };
 
-  console.log('check:::::', data, option.active);
-
   return await axiosInstance
     .post('/developerList', data)
     .then(handleSuccess)

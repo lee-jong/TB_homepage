@@ -3,10 +3,12 @@ import React from 'react';
 // # Utill & Module
 import Pagintaion from '../../../helpers/module/pagination';
 import { getDate } from '../../../helpers/utils';
+import { handelRouterIndex } from '../../../helpers/nextUtil';
+import { getDeveloperLimit } from '../../../helpers/setting';
 
 class DeveloperList extends React.Component {
   render() {
-    const { res, openPopup } = this.props;
+    const { res, openPopup, active, handlePage } = this.props;
     return (
       <>
         <div className="TB_developer_content">
@@ -21,7 +23,12 @@ class DeveloperList extends React.Component {
             </thead>
             <tbody>
               {res.list.map(item => (
-                <tr className="TB_developer_table_tr">
+                <tr
+                  onClick={() =>
+                    handelRouterIndex('developer/detail', item.seq)
+                  }
+                  className="TB_developer_table_tr"
+                >
                   <td className="TB_developer_table_td">{item.seq}</td>
                   <td className="TB_developer_table_td">{item.title}</td>
                   <td className="TB_developer_table_td">{item.content}</td>
@@ -35,10 +42,15 @@ class DeveloperList extends React.Component {
 
           <div className="TB_developer_footer">
             <div className="TB_pagination">
-              <Pagintaion total={res.total} activeProps={1} />
+              <Pagintaion
+                total={res.total}
+                activeProps={active}
+                dataPerPage={getDeveloperLimit}
+                handleChangePage={handlePage}
+              />
             </div>
             <div className="TB_developer_create_button">
-              <button onClick={() => openPopup('developer')}>생성</button>
+              <button onClick={() => openPopup('detail')}>생성</button>
             </div>
           </div>
         </div>

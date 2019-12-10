@@ -2,11 +2,11 @@
 import React from 'react';
 
 // # Action
-import { getDeveloperList } from '../../actions/developer';
+import { getDeveloperList, insertDeveloper } from '../../actions/developer';
 
 // # Component
 import DeveloperList from '../../components/dump/developer/DeveloperList';
-import P_Developer from '../../components/popup/P_Developer';
+import CreateDeveloper from '../../components/dump/developer/CreateDeveloper';
 
 class Developer extends React.Component {
   static async getInitialProps({}) {
@@ -28,31 +28,88 @@ class Developer extends React.Component {
       list: this.props.developerList.result,
       total: this.props.developerList.total
     },
-    popup: {
-      developer: false
-    }
+    page: {
+      detail: false
+    },
+    insertData: {
+      title: '',
+      place: '', //developer note file name
+      content: ''
+    },
+    active: 1
   };
 
-  openPopup = name => {
+  handelPopup = name => {
     this.setState({
-      popup: {
-        ...this.state.popup,
-        [name]: true
+      page: {
+        ...this.state.page,
+        [name]: !this.state.page[name]
       }
     });
   };
 
+  handleChange = e => {
+    this.setState({
+      insertData: {
+        ...this.state.insertData,
+        [e.target.name]: e.target.value
+      }
+    });
+  };
+
+  handlePage = num => {
+    this.setState({
+      active: num
+    });
+  };
+
+  createDeveloperNote = async () => {
+    const { title, place, content } = this.state.insertData;
+
+    const requestData = {
+      title,
+      place,
+      content
+    };
+
+    try {
+      let responseData = await insertDeveloper(requestData);
+      if (responseData.status === 200) {
+        alert('등록이 완료되었습니다.');
+        this.handelPopup('detail');
+      }
+    } catch (err) {
+      console.log('create developer note error message :::', err);
+    }
+  };
+
   render() {
-    const { res, popup } = this.state;
-    console.log('this', this.state);
+    const { res, page, active } = this.state;
     return (
       <>
         <div className="TB_developer">
           <div className="TB_developer_main">
-            <div className="TB_developer_header">Developer Note</div>
-            <DeveloperList res={res} openPopup={this.openPopup} />
+            <div className="TB_developer_header">
+              {page.detail && 'Developer Note Create'}
+              {!page.detail && 'Developer Note'}
+            </div>
+            {page.detail && (
+              <CreateDeveloper
+                closePopup={this.handelPopup}
+                handleChange={this.handleChange}
+                createDeveloperNote={this.createDeveloperNote}
+              />
+            )}
+
+            {!page.detail && (
+              <DeveloperList
+                res={res}
+                active={active}
+                openPopup={this.handelPopup}
+                handlePage={this.handlePage}
+              />
+            )}
           </div>
-          {popup.developer && <P_Developer />}
         </div>
       </>
     );
