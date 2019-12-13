@@ -11,19 +11,27 @@ class MyApp extends App {
     }
 
     let path = ctx.pathname;
+    let DNPathCheck = path.slice(0, 14) === '/developerNote';
 
-    return { pageProps, path };
+    return { pageProps, path, DNPathCheck };
   }
 
   render() {
-    const { Component, pageProps, path } = this.props;
+    const { Component, pageProps, path, DNPathCheck } = this.props;
     return (
       <Container>
-        <div className="TB">
-          <BaseLayout path={path}>
+        {!DNPathCheck && (
+          <div className="TB">
+            <BaseLayout path={path} DNPathCheck={DNPathCheck}>
+              <Component {...pageProps} />
+            </BaseLayout>
+          </div>
+        )}
+        {DNPathCheck && (
+          <BaseLayout path={path} DNPathCheck={DNPathCheck}>
             <Component {...pageProps} />
           </BaseLayout>
-        </div>
+        )}
       </Container>
     );
   }

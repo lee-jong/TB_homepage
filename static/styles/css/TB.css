@@ -107,10 +107,10 @@ body,
 
 .TB_main_content_box {
   margin-left: 30%;
-  background-color: #818181;
   width: 20%;
   height: 65%;
   position: absolute;
+  background-color: #818181;
   background: rgba(98, 105, 99, 0.527);
 }
 

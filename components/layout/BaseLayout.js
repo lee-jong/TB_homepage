@@ -5,12 +5,11 @@ import React from 'react';
 import Meta from '../shared/Meta';
 import Header from '../shared/Header';
 
-const BaseLayout = ({ children, path }) => {
+const BaseLayout = ({ children, path, DNPathCheck }) => {
   return (
     <>
       <Meta />
-      <Header />
-      {/* {path !== '/' && <Header />} */}
+      {!DNPathCheck && <Header />}
       {children}
     </>
   );
