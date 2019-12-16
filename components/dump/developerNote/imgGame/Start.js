@@ -13,13 +13,14 @@ class Start extends React.Component {
             S_status: false,
             S_timer: this.props.option.time,
             S_img: randomImg(customize_img),
-            S_result: {
+            S_count: 1
+        },
+        end: {
+            E_status: false,
+            E_result: {
                 success: [],
                 fail: []
             }
-        },
-        end: {
-            E_status: false
         }
     };
 
@@ -27,6 +28,19 @@ class Start extends React.Component {
     statingTime = '';
 
     componentDidMount() {
+        this.gameReadyTime();
+    }
+
+    timeOut = name => {
+        clearInterval(this[name]);
+        this[name] = '';
+
+        if (name == 'loadingTime') {
+            this.gameStartTime();
+        }
+    };
+
+    gameReadyTime = () => {
         this.loadingTime = setInterval(() => {
             if (this.state.loading.L_timer === 0)
                 return this.setState(
@@ -49,15 +63,6 @@ class Start extends React.Component {
                 }
             });
         }, 1000);
-    }
-
-    timeOut = name => {
-        clearInterval(this[name]);
-        this[name] = '';
-
-        if (name == 'loadingTime') {
-            this.gameStartTime();
-        }
     };
 
     gameStartTime = () => {
@@ -67,6 +72,7 @@ class Start extends React.Component {
                     {
                         start: {
                             ...this.state.start.S_timer,
+                            S_timer: this.props.option.time,
                             S_status: false
                         },
                         end: {
@@ -85,29 +91,88 @@ class Start extends React.Component {
         }, 1000);
     };
 
+    gameReStart = () => {
+        this.setState(
+            {
+                loading: {
+                    ...this.state.loading,
+                    L_status: true
+                },
+                start: {
+                    ...this.state.start,
+                    S_timer: this.props.option.time,
+                    S_count: 1
+                },
+                end: {
+                    E_status: false,
+                    E_result: {
+                        success: [],
+                        fail: []
+                    }
+                }
+            },
+            () => this.gameReadyTime()
+        );
+    };
+
     nextImg = bool => {
-        const { S_img, S_result } = this.state.start;
-        let findIdx = customize_img.findIndex(item => item.key == S_img.key);
+        const { S_img, S_count } = this.state.start;
+        const { E_result } = this.state.end;
+
+        let findIdx = customize_img.findIndex(
+            item => item.key == this.state.start.S_img.key
+        );
         customize_img[findIdx].exposure = true;
+
+        if (!randomImg(customize_img) || S_count == 10) {
+            this.timeOut('statingTime');
+            return this.setState({
+                start: {
+                    ...this.state.start,
+                    S_img: randomImg(customize_img),
+                    S_status: false
+                },
+                end: {
+                    E_status: true,
+                    E_result: {
+                        success: bool
+                            ? E_result.success.concat(S_img)
+                            : E_result.success,
+                        fail: !bool
+                            ? E_result.fail.concat(S_img)
+                            : E_result.fail
+                    }
+                }
+            });
+        }
 
         this.setState({
             start: {
                 ...this.state.start,
-                S_result: {
-                    ...this.state.start.S_result,
+                S_img: randomImg(customize_img),
+                S_count: S_count + 1
+            },
+            end: {
+                ...this.state.end,
+                E_result: {
                     success: bool
-                        ? S_result.success.concat(S_img)
-                        : S_result.fail.concat(S_img)
-                },
-                S_img: randomImg(customize_img)
+                        ? E_result.success.concat(S_img)
+                        : E_result.success,
+                    fail: !bool ? E_result.fail.concat(S_img) : E_result.fail
+                }
             }
         });
     };
 
+    goToMain = () => {
+        location.reload();
+    };
+
     render() {
         const { L_timer, L_status } = this.state.loading;
-        const { S_timer, S_status, S_img, S_result } = this.state.start;
-        const { E_status } = this.state.end;
+        const { S_timer, S_status, S_img } = this.state.start;
+        const { E_status, E_result } = this.state.end;
+        const { battle, handleChange } = this.props;
 
         return (
             <>
@@ -117,23 +182,44 @@ class Start extends React.Component {
                 {S_status && (
                     <>
                         <div>
-                            <div className="TB_Customize_header">{S_timer}</div>
+                            <div className="TB_Customize_header">
+                                남은 시간 : {S_timer}
+                            </div>
                             <div>
                                 <div>{S_img.name}</div>
                                 <img src={S_img.img} />
                             </div>
                             <div>
-                                <button onClick={this.nextImg(true)}>
+                                <button onClick={() => this.nextImg(true)}>
                                     다음
                                 </button>
-                                <button onClick={this.nextImg(false)}>
+                                <button onClick={() => this.nextImg(false)}>
                                     패스
                                 </button>
                             </div>
                         </div>
                     </>
                 )}
-                {E_status && <div className="TB_Customize_loading">END</div>}
+                {E_status && (
+                    <>
+                        <div className="TB_Customize_loading">END</div>{' '}
+                        <div>
+                            <span>맞춘 갯수 : {E_result.success.length} </span>
+                            <span>틀린 갯수 : {E_result.fail.length}</span>
+                        </div>
+                        {battle ? (
+                            <button
+                                onClick={this.gameReStart}
+                                onChange={handleChange}
+                                name="battle"
+                            >
+                                상대시작
+                            </button>
+                        ) : (
+                            <button onClick={this.goToMain}>돌아가기</button>
+                        )}
+                    </>
+                )}
             </>
         );
     }

@@ -8,11 +8,11 @@ import '../../static/styles/css/TB.css';
 import '../../static/styles/css/TB_developer.css';
 
 const Meta = () => {
-  return (
-    <Head>
-      <title>TwoBell Home Page</title>
-    </Head>
-  );
+    return (
+        <Head>
+            <title>TwoBell Home Page</title>
+        </Head>
+    );
 };
 
 export default Meta;

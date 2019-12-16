@@ -8,7 +8,6 @@ export const dotdotdot = (text, maxLength = 96) => {
 export const randomImg = arr => {
     let newArr = [];
     arr.map(item => {
-        console.log('check', item);
         if (item.exposure == false) {
             newArr.push(item);
         }

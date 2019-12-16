@@ -1,565 +1,565 @@
 html,
 body,
 #__next {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 /* All */
 .TB {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  background-image: url('/static/images/back-image.jpg');
-  background-size: 100% 100%;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-image: url('/static/images/back-image.jpg');
+    background-size: 100% 100%;
 }
 
 /* Header CSS */
 .TB_header {
-  text-align: center;
+    text-align: center;
 }
 
 .TB_Header_Logo {
-  height: 110%;
+    height: 110%;
 }
 
 .TB_Menu_icon {
-  height: 100%;
-  margin-left: 85%;
+    height: 100%;
+    margin-left: 85%;
 }
 
 /* SideMenu CSS */
 .TB_sideMenu {
-  height: 100%;
-  width: 300px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: #2e8ef4;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #2e8ef4;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
 }
 
 .TB_sideMenu a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
 }
 
 .TB_sideMenu a:hover {
-  color: #f1f1f1;
+    color: #f1f1f1;
 }
 
 .TB_sideMenu .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {
-    padding-top: 15px;
-  }
-  .sidenav a {
-    font-size: 18px;
-  }
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
 }
 
 /* Main CSS */
 .TB_main {
-  height: 100%;
-  width: 100%;
-  text-align: center;
+    height: 100%;
+    width: 100%;
+    text-align: center;
 }
 
 .TB_main_sideMenu {
-  color: #818181;
-  margin-top: 3%;
+    color: #818181;
+    margin-top: 3%;
 }
 
 .TB_main_sideMenu img {
-  height: 2%;
-  width: 4%;
+    height: 2%;
+    width: 4%;
 }
 
 .TB_main_logo {
-  margin-top: 2%;
+    margin-top: 2%;
 }
 .TB_main_logo_img {
-  height: 4%;
-  width: 8%;
+    height: 4%;
+    width: 8%;
 }
 
 .TB_main_content {
-  margin-top: 2%;
-  width: 100%;
-  height: 60%;
+    margin-top: 2%;
+    width: 100%;
+    height: 60%;
 }
 
 .TB_main_content_box {
-  margin-left: 30%;
-  width: 20%;
-  height: 65%;
-  position: absolute;
-  background-color: #818181;
-  background: rgba(98, 105, 99, 0.527);
+    margin-left: 30%;
+    width: 20%;
+    height: 65%;
+    position: absolute;
+    background-color: #818181;
+    background: rgba(98, 105, 99, 0.527);
 }
 
 .TB_main_content_box_right {
-  position: absolute;
-  left: 50.5%;
-  height: 100%;
-  width: 100%;
+    position: absolute;
+    left: 50.5%;
+    height: 100%;
+    width: 100%;
 }
 
 .TB_main_content_box2 {
-  background-color: #818181;
-  width: 20%;
-  height: 31.7%;
-  background: rgba(98, 105, 99, 0.527);
+    background-color: #818181;
+    width: 20%;
+    height: 31.7%;
+    background: rgba(98, 105, 99, 0.527);
 }
 
 .TB_main_content_box3 {
-  margin-top: 0.5%;
-  background-color: #818181;
-  width: 20%;
-  height: 31.7%;
-  background: rgba(98, 105, 99, 0.527);
+    margin-top: 0.5%;
+    background-color: #818181;
+    width: 20%;
+    height: 31.7%;
+    background: rgba(98, 105, 99, 0.527);
 }
 
 /* Main Devaloper Board CSS */
 .TB_main_board {
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 }
 
 .TB_main_board_header {
-  margin-top: 6%;
-  display: flex;
-  justify-content: space-between;
-  color: #b4acac;
-  font-size: 15px;
-  text-shadow: 0 0 0.1em, 0 0 0.1em;
+    margin-top: 6%;
+    display: flex;
+    justify-content: space-between;
+    color: #b4acac;
+    font-size: 15px;
+    text-shadow: 0 0 0.1em, 0 0 0.1em;
 }
 
 .TB_main_board_title {
-  margin-left: 3%;
+    margin-left: 3%;
 }
 
 .TB_main_board_more {
-  margin-right: 3%;
-  cursor: pointer;
+    margin-right: 3%;
+    cursor: pointer;
 }
 
 .TB_main_board_more:hover {
-  text-shadow: 0 0 0.3em, 0 0 0.9em;
+    text-shadow: 0 0 0.3em, 0 0 0.9em;
 }
 
 .TB_main_board_content {
-  margin-top: 18%;
+    margin-top: 18%;
 }
 
 .TB_main_board_content_item {
-  margin-top: 6%;
-  display: flex;
-  justify-content: space-around;
-  color: #b4acac;
-  font-size: 12px;
-  text-shadow: 0 0 0.1em, 0 0 0.1em;
+    margin-top: 6%;
+    display: flex;
+    justify-content: space-around;
+    color: #b4acac;
+    font-size: 12px;
+    text-shadow: 0 0 0.1em, 0 0 0.1em;
 }
 
 .TB_main_board_content_item_font {
-  width: 20%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    width: 20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .TB_main_board_content_dat {
-  margin-top: 4%;
-  color: #b4acac;
-  font-size: 12px;
-  text-shadow: 0 0 0.1em, 0 0 0.1em;
+    margin-top: 4%;
+    color: #b4acac;
+    font-size: 12px;
+    text-shadow: 0 0 0.1em, 0 0 0.1em;
 }
 
 /* Main Info Board CSS */
 .TB_main_info {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .TB_main_info_header {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 6%;
-  color: #b4acac;
-  font-size: 15px;
-  text-shadow: 0 0 0.1em, 0 0 0.1em;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 6%;
+    color: #b4acac;
+    font-size: 15px;
+    text-shadow: 0 0 0.1em, 0 0 0.1em;
 }
 
 .TB_main_info_header_title {
-  padding-left: 3%;
+    padding-left: 3%;
 }
 
 .TB_main_info_header_more {
-  padding-right: 3%;
-  cursor: pointer;
+    padding-right: 3%;
+    cursor: pointer;
 }
 
 .TB_main_info_header_more:hover {
-  text-shadow: 0 0 0.3em, 0 0 0.9em;
+    text-shadow: 0 0 0.3em, 0 0 0.9em;
 }
 
 .TB_main_info_content {
-  padding-top: 14%;
-  color: #b4acac;
-  font-size: 15px;
-  text-shadow: 0 0 0.1em, 0 0 0.1em;
+    padding-top: 14%;
+    color: #b4acac;
+    font-size: 15px;
+    text-shadow: 0 0 0.1em, 0 0 0.1em;
 }
 
 /* Main Guest Book CSS */
 .TB_main_guestBook {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .TB_main_guestBook_header {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 6%;
-  color: #b4acac;
-  font-size: 15px;
-  text-shadow: 0 0 0.1em, 0 0 0.1em;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 6%;
+    color: #b4acac;
+    font-size: 15px;
+    text-shadow: 0 0 0.1em, 0 0 0.1em;
 }
 
 .TB_main_guestBook_header_title {
-  padding-left: 3%;
+    padding-left: 3%;
 }
 
 .TB_main_guestBook_header_more {
-  padding-right: 3%;
-  cursor: pointer;
+    padding-right: 3%;
+    cursor: pointer;
 }
 
 .TB_main_guestBook_header_more:hover {
-  text-shadow: 0 0 0.3em, 0 0 0.9em;
+    text-shadow: 0 0 0.3em, 0 0 0.9em;
 }
 
 .TB_main_guestBook_content {
-  padding-top: 14%;
-  color: #b4acac;
-  font-size: 12px;
-  text-shadow: 0 0 0.1em, 0 0 0.1em;
+    padding-top: 14%;
+    color: #b4acac;
+    font-size: 12px;
+    text-shadow: 0 0 0.1em, 0 0 0.1em;
 }
 
 .TB_main_guestBook_content_item {
-  margin-top: 4%;
-  display: flex;
-  justify-content: space-around;
-  color: #b4acac;
-  font-size: 12px;
-  text-shadow: 0 0 0.1em, 0 0 0.1em;
+    margin-top: 4%;
+    display: flex;
+    justify-content: space-around;
+    color: #b4acac;
+    font-size: 12px;
+    text-shadow: 0 0 0.1em, 0 0 0.1em;
 }
 
 .main_guestBook_content_dat {
-  margin-top: 4%;
-  color: #b4acac;
-  font-size: 12px;
-  text-shadow: 0 0 0.1em, 0 0 0.1em;
+    margin-top: 4%;
+    color: #b4acac;
+    font-size: 12px;
+    text-shadow: 0 0 0.1em, 0 0 0.1em;
 }
 
 /* Developer List CSS */
 .TB_developer {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .TB_developer_main {
-  width: 70%;
-  height: 70%;
-  background-color: #818181;
-  background: rgba(98, 105, 99, 0.527);
-  margin-left: 15%;
-  margin-top: 5%;
+    width: 70%;
+    height: 70%;
+    background-color: #818181;
+    background: rgba(98, 105, 99, 0.527);
+    margin-left: 15%;
+    margin-top: 5%;
 }
 
 .TB_developer_header {
-  padding-top: 4%;
-  padding-left: 4%;
-  color: #b4acac;
-  font-size: 25px;
-  text-shadow: 0 0 0.3em, 0 0 0.9em;
+    padding-top: 4%;
+    padding-left: 4%;
+    color: #b4acac;
+    font-size: 25px;
+    text-shadow: 0 0 0.3em, 0 0 0.9em;
 }
 
 .TB_developer_table {
-  margin-top: 5%;
-  width: 100%;
-  height: 70%;
-  border-top: 1px solid #818181;
-  border-collapse: collapse;
-  color: #b4acac;
-  text-shadow: 0 0 0.1em, 0 0 0.3em;
+    margin-top: 5%;
+    width: 100%;
+    height: 70%;
+    border-top: 1px solid #818181;
+    border-collapse: collapse;
+    color: #b4acac;
+    text-shadow: 0 0 0.1em, 0 0 0.3em;
 }
 
 .TB_developer_table_tr,
 .TB_developer_table_td {
-  border-bottom: 1px solid #818181;
-  padding: 0.7%;
-  padding-left: 4%;
+    border-bottom: 1px solid #818181;
+    padding: 0.7%;
+    padding-left: 4%;
 }
 
 .TB_developer_footer {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .TB_developer_create_button {
-  padding-top: 2.5%;
-  width: 10%;
+    padding-top: 2.5%;
+    width: 10%;
 }
 
 .TB_developer_create_button button {
-  background-color: #797171; /* Green */
-  border: none;
-  color: #b4acac;
-  text-shadow: 0 0 0.3em, 0 0 0.9em;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+    background-color: #797171; /* Green */
+    border: none;
+    color: #b4acac;
+    text-shadow: 0 0 0.3em, 0 0 0.9em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
 
 .TB_developer_create_button button:hover {
-  text-shadow: 0 0 3.3em, 0 0 9.9em;
+    text-shadow: 0 0 3.3em, 0 0 9.9em;
 }
 
 /* Pagination CSS */
 .TB_pagination {
-  width: 100%;
+    width: 100%;
 }
 
 .TB_paging {
-  display: flex;
-  text-align: center;
-  padding-top: 2.5%;
-  padding-left: 40%;
+    display: flex;
+    text-align: center;
+    padding-top: 2.5%;
+    padding-left: 40%;
 }
 .TB_paging_button {
-  width: 7%;
-  height: 10%;
+    width: 7%;
+    height: 10%;
 }
 
 .disabled {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .TB_paging_button img {
-  width: 50%;
-  height: 50%;
+    width: 50%;
+    height: 50%;
 }
 
 .TB_paging_button_number {
-  padding-top: 0.4%;
-  width: 11%;
-  align-items: center;
+    padding-top: 0.4%;
+    width: 11%;
+    align-items: center;
 }
 
 .TB_paging_button_number a {
-  color: #b4acac;
-  text-shadow: 0 0 0.1em, 0 0 0.3em;
-  text-decoration: none;
-  padding-left: 9%;
+    color: #b4acac;
+    text-shadow: 0 0 0.1em, 0 0 0.3em;
+    text-decoration: none;
+    padding-left: 9%;
 }
 
 .on {
-  pointer-events: none;
-  text-shadow: 0 0 0.3em, 0 0 0.9em;
+    pointer-events: none;
+    text-shadow: 0 0 0.3em, 0 0 0.9em;
 }
 
 .TB_paging_button_number a:hover {
-  text-shadow: 0 0 1.9em, 0 0 2.4em;
+    text-shadow: 0 0 1.9em, 0 0 2.4em;
 }
 
 .TB_developer_create {
-  margin-top: 5%;
-  width: 100%;
-  height: 70%;
-  border-top: 1px solid #818181;
-  border-collapse: collapse;
-  color: #b4acac;
-  text-shadow: 0 0 0.1em, 0 0 0.3em;
+    margin-top: 5%;
+    width: 100%;
+    height: 70%;
+    border-top: 1px solid #818181;
+    border-collapse: collapse;
+    color: #b4acac;
+    text-shadow: 0 0 0.1em, 0 0 0.3em;
 }
 
 .TB_developer_create_content {
-  width: 100%;
-  height: 80%;
-  padding-left: 4%;
-  display: inline-block;
+    width: 100%;
+    height: 80%;
+    padding-left: 4%;
+    display: inline-block;
 }
 .TB_developer_create_content_item {
-  height: 100%;
+    height: 100%;
 }
 
 .TB_developer_create_content_item_key {
-  height: 100%;
-  align-items: center;
+    height: 100%;
+    align-items: center;
 }
 
 .TB_developer_create_content tbody {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .TB_developer_create_content input {
-  background: rgba(96, 104, 97, 0.849);
-  border: none;
-  color: #b4acac;
-  text-shadow: 0 0 0.9em, 0 0 2.7em;
-  height: 24px;
-  margin-top: 20%;
-  margin-left: 20%;
-  width: 100%;
+    background: rgba(96, 104, 97, 0.849);
+    border: none;
+    color: #b4acac;
+    text-shadow: 0 0 0.9em, 0 0 2.7em;
+    height: 24px;
+    margin-top: 20%;
+    margin-left: 20%;
+    width: 100%;
 }
 
 .TB_developer_create_content div {
-  padding-bottom: 20%;
+    padding-bottom: 20%;
 }
 
 .TB_developer_create_content textarea {
-  background: rgba(96, 104, 97, 0.849);
-  border: none;
-  color: #b4acac;
-  text-shadow: 0 0 0.9em, 0 0 2.7em;
-  height: 48px;
-  width: 100%;
-  margin-top: 20%;
-  margin-left: 20%;
+    background: rgba(96, 104, 97, 0.849);
+    border: none;
+    color: #b4acac;
+    text-shadow: 0 0 0.9em, 0 0 2.7em;
+    height: 48px;
+    width: 100%;
+    margin-top: 20%;
+    margin-left: 20%;
 }
 
 .TB_developer_create_footer {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .TB_developer_create_footer button {
-  background-color: #797171; /* Green */
-  border: none;
-  color: #b4acac;
-  text-shadow: 0 0 0.3em, 0 0 0.9em;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  float: right;
-  margin-right: 1%;
+    background-color: #797171; /* Green */
+    border: none;
+    color: #b4acac;
+    text-shadow: 0 0 0.3em, 0 0 0.9em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    float: right;
+    margin-right: 1%;
 }
 
 .TB_developer_create_footer button:hover {
-  text-shadow: 0 0 3.3em, 0 0 9.9em;
+    text-shadow: 0 0 3.3em, 0 0 9.9em;
 }
 
 .TB_developer_detail {
-  width: 70%;
-  height: 70%;
-  background-color: #818181;
-  background: rgba(98, 105, 99, 0.527);
-  margin-left: 15%;
-  margin-top: 5%;
+    width: 70%;
+    height: 70%;
+    background-color: #818181;
+    background: rgba(98, 105, 99, 0.527);
+    margin-left: 15%;
+    margin-top: 5%;
 }
 
 .TB_developer_detail_header {
-  padding-top: 4%;
-  padding-left: 4%;
-  color: #b4acac;
-  font-size: 25px;
-  text-shadow: 0 0 0.3em, 0 0 0.9em;
+    padding-top: 4%;
+    padding-left: 4%;
+    color: #b4acac;
+    font-size: 25px;
+    text-shadow: 0 0 0.3em, 0 0 0.9em;
 }
 
 .TB_developer_detail_content {
-  margin-top: 5%;
-  width: 100%;
-  padding-left: 0.5%;
-  padding-top: 0.5%;
-  height: 76%;
-  border-top: 1px solid #818181;
-  border-collapse: collapse;
-  color: #b4acac;
-  text-shadow: 0 0 0.1em, 0 0 0.3em;
-  display: flex;
-  justify-content: space-between;
+    margin-top: 5%;
+    width: 100%;
+    padding-left: 0.5%;
+    padding-top: 0.5%;
+    height: 76%;
+    border-top: 1px solid #818181;
+    border-collapse: collapse;
+    color: #b4acac;
+    text-shadow: 0 0 0.1em, 0 0 0.3em;
+    display: flex;
+    justify-content: space-between;
 }
 
 .TB_developer_detail_iframe {
-  height: 100%;
-  width: 70%;
+    height: 100%;
+    width: 70%;
 }
 
 .TB_developer_detail_font {
-  width: 30%;
-  height: 100%;
-  text-align: center;
-  word-break: break-all;
-  padding-left: 2%;
-  padding-right: 2%;
+    width: 30%;
+    height: 100%;
+    text-align: center;
+    word-break: break-all;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
 .TB_developer_detail_font button {
-  margin-top: 100%;
-  margin-left: 80%;
-  background-color: #797171; /* Green */
-  border: none;
-  color: #b4acac;
-  text-shadow: 0 0 0.3em, 0 0 0.9em;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+    margin-top: 100%;
+    margin-left: 80%;
+    background-color: #797171; /* Green */
+    border: none;
+    color: #b4acac;
+    text-shadow: 0 0 0.3em, 0 0 0.9em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
 
 .TB_developer_detail_font button:hover {
-  text-shadow: 0 0 3.3em, 0 0 9.9em;
+    text-shadow: 0 0 3.3em, 0 0 9.9em;
 }
 
 /* Developer Popup CSS */
 
 .TB_developer_popup {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 9999999999999; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(98, 105, 99, 0.527); /* Fallback color */
-  background-color: rgba(98, 105, 99, 0.527); /* Black w/ opacity */
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9999999999999; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(98, 105, 99, 0.527); /* Fallback color */
+    background-color: rgba(98, 105, 99, 0.527); /* Black w/ opacity */
 }
 
 .TB_developer_popup_box {
-  background-size: 100%;
-  height: 60%;
-  background-color: #b4acac;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  color: white;
-  z-index: 9999999999999;
-  overflow: scroll;
-  background: rgba(96, 104, 97, 0.849);
+    background-size: 100%;
+    height: 60%;
+    background-color: #b4acac;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    color: white;
+    z-index: 9999999999999;
+    overflow: scroll;
+    background: rgba(96, 104, 97, 0.849);
 }
 
 .TB_developer_popup_close {
-  cursor: pointer;
+    cursor: pointer;
 }
