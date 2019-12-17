@@ -51,7 +51,7 @@ class Customize extends React.Component {
 
     render() {
         const { start } = this.state;
-        const { battle } = this.state.option;
+        const { battle, title } = this.state.option;
         return (
             <>
                 <div className="TB_Customize">
@@ -67,6 +67,7 @@ class Customize extends React.Component {
                             option={this.state.option}
                             handleChange={this.handleChange}
                             battle={battle}
+                            title={title}
                         />
                     )}
                 </div>
