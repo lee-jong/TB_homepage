@@ -93,6 +93,23 @@ class Start extends React.Component {
     };
 
     gameReStart = () => {
+        const { title } = this.props;
+        let reStartCheck = [];
+        customize_img[title].map(item => {
+            if (item.exposure == false) {
+                reStartCheck.push(item);
+            }
+        });
+
+        if (reStartCheck.length < 10) {
+            alert('중복되지 않은 사진의 수가 부족합니다.');
+            this.goToMain();
+        }
+
+        if (reStartCheck.length >= 10) {
+            reStartCheck = [];
+        }
+
         this.setState(
             {
                 loading: {
@@ -174,7 +191,7 @@ class Start extends React.Component {
         const { L_timer, L_status } = this.state.loading;
         const { S_timer, S_status, S_img } = this.state.start;
         const { E_status, E_result } = this.state.end;
-        const { battle, handleChange } = this.props;
+        const { handleChange, battle } = this.props;
 
         return (
             <>
@@ -189,9 +206,11 @@ class Start extends React.Component {
                                     남은 시간 : {S_timer}
                                 </div>
 
-                                <div className="TB_Customize_header_title">
-                                    정답 : {S_img.name}
-                                </div>
+                                {battle && (
+                                    <div className="TB_Customize_header_title">
+                                        정답 : {S_img.name}
+                                    </div>
+                                )}
                             </div>
                             <div className="TB_Customize_content">
                                 <img
@@ -223,19 +242,22 @@ class Start extends React.Component {
                                 </span>
                             </div>
 
-                            {battle ? (
+                            <div className="TB_Customize_end_buttons">
                                 <button
                                     onClick={this.gameReStart}
                                     onChange={handleChange}
                                     name="battle"
+                                    className="TB_Customize_end_left"
                                 >
-                                    상대시작
+                                    이어하기
                                 </button>
-                            ) : (
-                                <button onClick={this.goToMain}>
+                                <button
+                                    className="TB_Customize_end_right"
+                                    onClick={this.goToMain}
+                                >
                                     돌아가기
                                 </button>
-                            )}
+                            </div>
                         </div>
                     </>
                 )}

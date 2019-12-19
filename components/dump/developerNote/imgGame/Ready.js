@@ -2,7 +2,7 @@ import React from 'react';
 
 class Ready extends React.Component {
     render() {
-        const { battle } = this.props.option;
+        const { battle, title } = this.props.option;
         const { handleChange } = this.props;
         return (
             <>
@@ -10,11 +10,15 @@ class Ready extends React.Component {
                 <div className="TB_Customize_option">
                     <div className="TB_Customize_option_title">
                         <div> 주제 </div>
-                        <select onChange={handleChange} name="title">
+                        <select
+                            onChange={handleChange}
+                            value={title}
+                            name="title"
+                        >
                             <option value=""> 선택해주세요 </option>
                             <option value="character">인물</option>
                             <option value="animal">동물</option>
-                            <option value="3">사물</option>
+                            <option value="Preparing">사물</option>
                         </select>
                     </div>
                     <div className="TB_Customize_option_time">
@@ -27,19 +31,19 @@ class Ready extends React.Component {
                         />
                     </div>
                     <div className="TB_Customize_option_checked">
-                        <div>같은 주제 대결</div>
+                        <div>종목</div>
                         {battle && (
                             <img
                                 onClick={handleChange}
                                 name="battle"
-                                src="/static/images/yes.png"
+                                src="/static/images/imageIt.png"
                             />
                         )}
                         {!battle && (
                             <img
                                 onClick={handleChange}
                                 name="battle"
-                                src="/static/images/no.png"
+                                src="/static/images/nameIt.png"
                             />
                         )}
                     </div>

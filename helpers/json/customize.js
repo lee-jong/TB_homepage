@@ -65,6 +65,90 @@ export const customize_img = {
             name: '흑백목도리여우원숭이',
             img: '/static/images/animal/흑백목도리여우원숭이.jpg',
             exposure: false
+        },
+        {
+            key: 12,
+            name: '공작새',
+            img: '/static/images/animal/공작새.jpg',
+            exposure: false
+        },
+        {
+            key: 13,
+            name: '기드림풍조',
+            img: '/static/images/animal/기드림풍조.jpg',
+            exposure: false
+        },
+        {
+            key: 14,
+            name: '기린',
+            img: '/static/images/animal/기린.jpg',
+            exposure: false
+        },
+        {
+            key: 15,
+            name: '덤불독사',
+            img: '/static/images/animal/덤불독사.jpg',
+            exposure: false
+        },
+        {
+            key: 16,
+            name: '땅돼지',
+            img: '/static/images/animal/땅돼지.jpg',
+            exposure: false
+        },
+        {
+            key: 17,
+            name: '빨판상어',
+            img: '/static/images/animal/빨판상어.jpg',
+            exposure: false
+        },
+        {
+            key: 18,
+            name: '사막여우',
+            img: '/static/images/animal/사막여우.jpg',
+            exposure: false
+        },
+        {
+            key: 19,
+            name: '산쑥들꿩',
+            img: '/static/images/animal/산쑥들꿩.jpg',
+            exposure: false
+        },
+        {
+            key: 20,
+            name: '실러캔스',
+            img: '/static/images/animal/실러캔스.jpg',
+            exposure: false
+        },
+        {
+            key: 21,
+            name: '어깨걸이극락조',
+            img: '/static/images/animal/어깨걸이극락조.jpg',
+            exposure: false
+        },
+        {
+            key: 22,
+            name: '전기뱀장어',
+            img: '/static/images/animal/전기뱀장어.jpg',
+            exposure: false
+        },
+        {
+            key: 23,
+            name: '코뿔새',
+            img: '/static/images/animal/코뿔새.jpg',
+            exposure: false
+        },
+        {
+            key: 24,
+            name: '피라니아',
+            img: '/static/images/animal/피라니아.jpg',
+            exposure: false
+        },
+        {
+            key: 25,
+            name: '황금독화살개구리',
+            img: '/static/images/animal/황금독화살개구리.jpg',
+            exposure: false
         }
     ],
     character: [

@@ -27,6 +27,18 @@ class Customize extends React.Component {
                 });
                 break;
 
+            case 'title':
+                if (e.target.value == 'Preparing')
+                    return alert('준비중입니다.');
+
+                this.setState({
+                    option: {
+                        ...this.state.option,
+                        title: e.target.value
+                    }
+                });
+                break;
+
             case 'start':
                 if (title == '') return alert('주제를 선택해주세요.');
                 if (time == '') return alert('시간을 선택해주세요.');
