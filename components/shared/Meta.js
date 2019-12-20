@@ -6,6 +6,7 @@ import Head from 'next/head';
 import '../../static/styles/css/reset.css';
 import '../../static/styles/css/TB.css';
 import '../../static/styles/css/TB_developer.css';
+import '../../static/styles/css/TB_diceGame.css';
 
 const Meta = () => {
     return (
