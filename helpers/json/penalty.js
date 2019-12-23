@@ -40,3 +40,13 @@ export const changePenaltyJSON = [
     { key: 4, content: '뒤로 2칸 !', value: 2, add: false },
     { key: 5, content: '뒤로 3칸 !', value: 3, add: false }
 ];
+
+export const diceJSON = [
+    { key: 0, src: '/static/images/dice/1.png' },
+    { key: 1, src: '/static/images/dice/1.png' },
+    { key: 2, src: '/static/images/dice/2.png' },
+    { key: 3, src: '/static/images/dice/3.png' },
+    { key: 4, src: '/static/images/dice/4.png' },
+    { key: 5, src: '/static/images/dice/5.png' },
+    { key: 6, src: '/static/images/dice/6.png' }
+];

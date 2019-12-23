@@ -1,8 +1,8 @@
 import React from 'react';
-
 import {
     penaltyJSON,
-    changePenaltyJSON
+    changePenaltyJSON,
+    diceJSON
 } from '../../../../helpers/json/penalty';
 import { mixItem } from '../../../../helpers/utils';
 
@@ -11,7 +11,8 @@ class Dice_Game extends React.Component {
         users: this.props.info.users,
         game: {
             turn: 0, // 주사위 굴리는 유저 번호
-            plateContent: '가즈아~~~!' //현재 판의 내용
+            plateContent: '가즈아~~~!', //현재 판의 내용
+            img: ''
         },
         penalty: mixItem(penaltyJSON),
         dice_status: 'ready' // 현재 주사위 진행 상태
@@ -19,6 +20,7 @@ class Dice_Game extends React.Component {
 
     goingTimer = '';
     changeTimer = '';
+    rollingTimer = '';
 
     stopTimer = name => {
         clearInterval(this[name]);
@@ -26,18 +28,40 @@ class Dice_Game extends React.Component {
     };
 
     rollingDice = () => {
-        const { users, dice_status } = this.state;
-        const { turn } = this.state.game;
+        const { dice_status } = this.state;
 
         if (dice_status !== 'ready') return;
         this.setState({
             dice_status: 'start'
         });
 
-        let usersCopy = users;
-        let dice = [1, 2, 3, 4, 5, 6];
-        let nextDice = dice[Math.floor(Math.random() * dice.length)];
+        let count = 0;
+        this.rollingTimer = setInterval(() => {
+            let dice = [1, 2, 3, 4, 5, 6];
+            let nextDice = dice[Math.floor(Math.random() * dice.length)];
 
+            count++;
+            this.setState({
+                game: {
+                    ...this.state.game,
+                    img: diceJSON[nextDice].src
+                }
+            });
+
+            if (count == 20) {
+                this.stopTimer('rollingTimer');
+                setTimeout(() => {
+                    this.nextDicePlate(nextDice);
+                }, 800);
+            }
+        }, 100);
+    };
+
+    nextDicePlate = nextDice => {
+        const { users } = this.state;
+        const { turn } = this.state.game;
+
+        let usersCopy = users;
         let count = 0;
         this.goingTimer = setInterval(() => {
             let changeSpaces = usersCopy.splice(turn, 1);
@@ -209,7 +233,7 @@ class Dice_Game extends React.Component {
 
     render() {
         const { penalty, dice_status, users } = this.state;
-        const { plateContent, turn } = this.state.game;
+        const { plateContent, turn, img } = this.state.game;
         return (
             <>
                 <div className="TB_diceGame_game_plate">
@@ -403,6 +427,9 @@ class Dice_Game extends React.Component {
                                         Re Game?
                                     </button>
                                 )}
+                            </div>
+                            <div>
+                                <img src={img} />
                             </div>
                         </div>
                     </div>
