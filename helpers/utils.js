@@ -15,6 +15,18 @@ export const randomImg = arr => {
     return newArr[Math.floor(Math.random() * newArr.length)];
 };
 
+export const mixItem = arr => {
+    let j, x, i;
+    for (i = arr.length; i; i -= 1) {
+        j = Math.floor(Math.random() * i);
+        x = arr[i - 1];
+        arr[i - 1] = arr[j];
+        arr[j] = x;
+    }
+
+    return arr;
+};
+
 export const getDate = (date, type) => {
     let prototypeDate = new Date(date);
 

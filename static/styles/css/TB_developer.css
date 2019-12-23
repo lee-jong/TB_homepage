@@ -285,8 +285,8 @@
 .TB_Customize_end_buttons button {
     background-color: #797171;
     border: none;
-    color: #b4acac;
     font-size: 19px;
+    color: #b4acac;
     text-shadow: 0 0 0.3em, 0 0 0.9em;
 }
 

@@ -6,7 +6,7 @@ class Dice_Home extends React.Component {
         return (
             <>
                 <div className="TB_diceGame_home">
-                    <div>
+                    <div className="TB_diceGame_home_personnel">
                         <div>인원 : </div>
                         <select
                             onChange={e => handleChange(e, 'game')}
@@ -21,7 +21,21 @@ class Dice_Home extends React.Component {
                         </select>
                     </div>
 
-                    <div>
+                    <div className="TB_diceGame_home_option">
+                        <div>옵션 : </div>
+                        <select
+                            onChange={e => handleChange(e, 'game')}
+                            name="option"
+                            value={info.option}
+                        >
+                            <option value="1">1 바퀴</option>
+                            <option value="2">2 바퀴</option>
+                            <option value="3">3 바퀴</option>
+                            <option value="999">한 명 죽을 떄 까지</option>
+                        </select>
+                    </div>
+
+                    <div className="TB_diceGame_home_button">
                         <button
                             onClick={e => handleChange(e, 'game', 'bool')}
                             name="status"

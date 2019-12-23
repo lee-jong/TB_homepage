@@ -14,16 +14,19 @@ class DiceGame extends React.Component {
                     key: 0,
                     space: 0,
                     status: 'start',
-                    color: 'hsla(4, 98%, 49%, 0.329)'
+                    color: 'hsla(4, 98%, 49%, 0.329)',
+                    rotation: 0
                 },
                 {
                     key: 1,
                     space: 0,
                     status: 'start',
-                    color: 'hsla(253, 98%, 49%, 0.329)'
+                    color: 'hsla(253, 98%, 49%, 0.329)',
+                    rotation: 0
                 }
             ],
-            personnel: '2'
+            personnel: '2',
+            option: 1
         }
     };
 
@@ -68,7 +71,8 @@ class DiceGame extends React.Component {
                     key: i,
                     space: 0,
                     status: 'start',
-                    color: getColor[i].color
+                    color: getColor[i].color,
+                    rotation: 0
                 });
                 this.setState({
                     game: {
