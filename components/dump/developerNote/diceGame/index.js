@@ -428,7 +428,7 @@ class Dice_Game extends React.Component {
                                     </button>
                                 )}
                             </div>
-                            <div>
+                            <div className="TB_diceGame_center_img">
                                 <img src={img} />
                             </div>
                         </div>
