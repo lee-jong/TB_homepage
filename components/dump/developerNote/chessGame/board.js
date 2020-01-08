@@ -17,14 +17,14 @@ class Board extends React.Component {
                     {alphabet.map((item, index) => (
                         <div
                             className={
-                                (checkedPlace(i + 1 + alphabet[index]) ==
+                                (checkedPlace(i + 1 + alphabet[index], 'key') ==
                                     game.choice &&
                                     'active') ||
                                 (game.moving.findIndex(
                                     item => item == i + 1 + alphabet[index]
                                 ) !== -1 &&
                                     'moving') ||
-                                (checkedPlace(i + 1 + alphabet[index]) ==
+                                (checkedPlace(i + 1 + alphabet[index], 'key') ==
                                     game.choice &&
                                     game.moving.findIndex(
                                         item => item == i + 1 + alphabet[index]
@@ -39,10 +39,27 @@ class Board extends React.Component {
                                           movementBattalion(
                                               i + 1 + alphabet[index]
                                           )
-                                    : choiceBattalion
+                                    : () =>
+                                          choiceBattalion(
+                                              checkedPlace(
+                                                  i + 1 + alphabet[index],
+                                                  'key'
+                                              )
+                                          )
                             }
                         >
-                            {checkedPlace(i + 1 + alphabet[index])}
+                            <img
+                                className={
+                                    checkedPlace(
+                                        i + 1 + alphabet[index],
+                                        'img'
+                                    ) && 'chess_img'
+                                }
+                                src={checkedPlace(
+                                    i + 1 + alphabet[index],
+                                    'img'
+                                )}
+                            />
                         </div>
                     ))}
                 </div>
@@ -53,9 +70,15 @@ class Board extends React.Component {
     };
 
     render() {
+        const { game } = this.props;
         return (
             <>
-                <div className="TB_chess_board">{this.createBoard()}</div>
+                <div className="TB_chess_board_main">
+                    <div className="TB_chess_board">{this.createBoard()}</div>
+                    <div className="navi">
+                        <h1>{game.turn}차례</h1>
+                    </div>
+                </div>
             </>
         );
     }

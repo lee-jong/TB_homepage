@@ -15,24 +15,37 @@ class Chess extends React.Component {
         game: {
             turn: 'white',
             choice: '',
-            moving: []
+            moving: [],
+            status: 'start'
         }
     };
 
-    checkedPlace = value => {
+    checkedPlace = (value, type) => {
         const { white, black } = this.state;
         let totalArr = white.battalion.concat(black.battalion);
         let findIdx = totalArr.findIndex(item => item.place == value);
         if (findIdx !== -1) {
-            return totalArr[findIdx].key;
+            let res = '';
+            switch (type) {
+                case 'key':
+                    res = totalArr[findIdx].key;
+                    break;
+
+                case 'img':
+                    res = totalArr[findIdx].img;
+                    break;
+            }
+
+            return res;
         }
     };
 
     // 골랐을 경우
-    choiceBattalion = e => {
+    choiceBattalion = value => {
         const { game, white, black } = this.state;
-        let value = e.target.textContent;
         // 차례가 맞는지
+        if (game.status == 'end') return;
+
         if (
             game.turn == 'white' &&
             white.battalion.findIndex(i => i.key == value) == -1
@@ -87,6 +100,7 @@ class Chess extends React.Component {
                     team: find.team,
                     role: find.role,
                     place: value,
+                    img: find.img,
                     firstMove: true
                 };
 
@@ -97,6 +111,19 @@ class Chess extends React.Component {
                     let toCatchIndex = black.battalion.findIndex(
                         i => i.key == this.checkedPlace(value)
                     );
+
+                    console.log('!?!?!', black.battalion[toCatchIndex].role);
+                    if (black.battalion[toCatchIndex].role == 'queen') {
+                        return this.setState(
+                            {
+                                game: {
+                                    ...this.state.game,
+                                    status: 'end'
+                                }
+                            },
+                            () => black.battalion.splice(toCatchIndex, 1)
+                        );
+                    }
                     black.battalion.splice(toCatchIndex, 1);
                 }
 
@@ -126,6 +153,7 @@ class Chess extends React.Component {
                     team: find.team,
                     role: find.role,
                     place: value,
+                    img: find.img,
                     firstMove: true
                 };
 
@@ -133,6 +161,17 @@ class Chess extends React.Component {
                     let toCatchIndex = white.battalion.findIndex(
                         i => i.key == this.checkedPlace(value)
                     );
+                    if (white.battalion[toCatchIndex].role == 'queen') {
+                        return this.setState(
+                            {
+                                game: {
+                                    ...this.state.game,
+                                    status: 'end'
+                                }
+                            },
+                            () => white.battalion.splice(toCatchIndex, 1)
+                        );
+                    }
                     white.battalion.splice(toCatchIndex, 1);
                 }
 
@@ -174,7 +213,7 @@ class Chess extends React.Component {
         }
     };
 
-    // 이동 가능 여부 보여주기
+    // 각각의 말의 특성에 따른 이동 모든 이동 범위
     possibleMove = e => {
         const { white, black } = this.state;
         let battalion = this.getInfo('battalion');
@@ -183,27 +222,96 @@ class Chess extends React.Component {
         let index = '';
         let move = '';
         let move2 = '';
+        let move3 = '';
+        let findIndex = '';
 
         if (battalion.team == 'white') {
             index = white.battalion.findIndex(i => i.key == battalion.key);
             move = Number(white.battalion[index].place.slice(0, 1));
             move2 = white.battalion[index].place.slice(1);
+            move3 = white.battalion[index].place.slice(2);
+            findIndex = lineX.findIndex(item => item == move3);
         }
 
         if (battalion.team == 'black') {
             index = black.battalion.findIndex(i => i.key == battalion.key);
             move = Number(black.battalion[index].place.slice(0, 1));
             move2 = black.battalion[index].place.slice(1);
+            move3 = black.battalion[index].place.slice(2);
+            findIndex = lineX.findIndex(item => item == move3);
         }
 
         switch (battalion.role) {
             case 'king':
+                let kingArr = [];
+                for (let k = 0; k <= lineX.length; k++) {
+                    kingArr.push(move + k + '-' + lineX[findIndex + k]);
+                    kingArr.push(move + k + '-' + lineX[findIndex - k]);
+                    kingArr.push(move - k + '-' + lineX[findIndex + k]);
+                    kingArr.push(move - k + '-' + lineX[findIndex - k]);
+                    kingArr.push(k + move2);
+                    kingArr.push(move + '-' + lineX[k]);
+                }
+
+                this.setState({
+                    game: {
+                        ...this.state.game,
+                        moving: this.movableChecked(kingArr, 'king')
+                    }
+                });
+
                 break;
             case 'queen':
+                let queenArr = [];
+                queenArr.push(move + 1 + '-' + move3);
+                queenArr.push(move - 1 + '-' + move3);
+                queenArr.push(move + '-' + lineX[findIndex + 1]);
+                queenArr.push(move + '-' + lineX[findIndex - 1]);
+                queenArr.push(move + 1 + '-' + lineX[findIndex + 1]);
+                queenArr.push(move - 1 + '-' + lineX[findIndex + 1]);
+                queenArr.push(move + 1 + '-' + lineX[findIndex - 1]);
+                queenArr.push(move - 1 + '-' + lineX[findIndex - 1]);
+
+                this.setState({
+                    game: {
+                        ...this.state.game,
+                        moving: this.movableChecked(queenArr, 'queen')
+                    }
+                });
+
                 break;
             case 'bishop':
+                let bishopArr = [];
+                for (let b = 1; b <= lineX.length; b++) {
+                    bishopArr.push(move + b + '-' + lineX[findIndex + b]);
+                    bishopArr.push(move + b + '-' + lineX[findIndex - b]);
+                    bishopArr.push(move - b + '-' + lineX[findIndex + b]);
+                    bishopArr.push(move - b + '-' + lineX[findIndex - b]);
+                }
+                this.setState({
+                    game: {
+                        ...this.state.game,
+                        moving: this.movableChecked(bishopArr, 'bishop')
+                    }
+                });
+
                 break;
             case 'knight':
+                let knightArr = [];
+                for (let k = 1; k <= 2; k++) {
+                    knightArr.push(move + k + '-' + lineX[findIndex + 1]);
+                    knightArr.push(move + k + '-' + lineX[findIndex - 1]);
+                    knightArr.push(move - k + '-' + lineX[findIndex + 1]);
+                    knightArr.push(move - k + '-' + lineX[findIndex - 1]);
+                }
+
+                this.setState({
+                    game: {
+                        ...this.state.game,
+                        moving: this.movableChecked(knightArr, 'knight')
+                    }
+                });
+
                 break;
             case 'rook':
                 let rookArr = [];
@@ -224,34 +332,99 @@ class Chess extends React.Component {
 
                 break;
             case 'pawn':
+                //여기만 다시하기 체크
                 if (battalion.team == 'white') {
-                    let whitePawn = !battalion.firstMove
-                        ? this.state.game.moving.concat(
-                              move - 1 + move2,
-                              move - 2 + move2
-                          )
-                        : this.state.game.moving.concat(move - 1 + move2);
+                    let whitePawn = [];
+
+                    if (
+                        !battalion.firstMove &&
+                        this.findIndexPlace('black', move - 2 + move2) == -1
+                    ) {
+                        whitePawn.push(move - 2 + move2);
+                    } else if (
+                        this.findIndexPlace('black', move - 1 + move2) == -1
+                    ) {
+                        whitePawn.push(move - 1 + move2);
+                    }
+
+                    if (
+                        battalion.firstMove &&
+                        this.findIndexPlace('black', move - 1 + move2) == -1
+                    ) {
+                        whitePawn.push(move - 1 + move2);
+                    }
+
+                    if (
+                        black.battalion.findIndex(
+                            item =>
+                                item.place ==
+                                move - 1 + '-' + lineX[findIndex + 1]
+                        ) !== -1
+                    ) {
+                        whitePawn.push(move - 1 + '-' + lineX[findIndex + 1]);
+                    }
+
+                    if (
+                        black.battalion.findIndex(
+                            item =>
+                                item.place ==
+                                move - 1 + '-' + lineX[findIndex - 1]
+                        ) !== -1
+                    ) {
+                        whitePawn.push(move - 1 + '-' + lineX[findIndex - 1]);
+                    }
 
                     this.setState({
                         game: {
                             ...this.state.game,
-                            moving: this.movableChecked(whitePawn)
+                            moving: this.movableChecked(whitePawn, 'pawn')
                         }
                     });
                 }
 
                 if (battalion.team == 'black') {
-                    let blackPawn = !battalion.firstMove
-                        ? this.state.game.moving.concat(
-                              move + 1 + move2,
-                              move + 2 + move2
-                          )
-                        : this.state.game.moving.concat(move + 1 + move2);
+                    let blackPawn = [];
+
+                    if (
+                        !battalion.firstMove &&
+                        this.findIndexPlace('white', move + 2 + move2) == -1
+                    ) {
+                        blackPawn.push(move + 2 + move2);
+                    } else if (
+                        this.findIndexPlace('white', move + 1 + move2) == -1
+                    ) {
+                        blackPawn.push(move + 1 + move2);
+                    }
+
+                    if (
+                        battalion.firstMove &&
+                        this.findIndexPlace('white', move + 1 + move2) == -1
+                    ) {
+                        blackPawn.push(move + 1 + move2);
+                    }
+
+                    if (
+                        this.findIndexPlace(
+                            'white',
+                            move + 1 + '-' + lineX[findIndex + 1]
+                        ) !== -1
+                    ) {
+                        blackPawn.push(move + 1 + '-' + lineX[findIndex + 1]);
+                    }
+
+                    if (
+                        this.findIndexPlace(
+                            'white',
+                            move + 1 + '-' + lineX[findIndex - 1]
+                        ) !== -1
+                    ) {
+                        blackPawn.push(move + 1 + '-' + lineX[findIndex - 1]);
+                    }
 
                     this.setState({
                         game: {
                             ...this.state.game,
-                            moving: this.movableChecked(blackPawn)
+                            moving: this.movableChecked(blackPawn, 'pawn')
                         }
                     });
                 }
@@ -259,7 +432,14 @@ class Chess extends React.Component {
         }
     };
 
-    // 이동 가능 여부 체크
+    findIndexPlace = (team, place) => {
+        let res = this.state[team].battalion.findIndex(
+            item => item.place == place
+        );
+        return res;
+    };
+
+    // 이동 가능 여부 체크 및 예외 처리
     movableChecked = (arr, type) => {
         console.log('arr:::', arr);
         const { game } = this.state;
@@ -270,10 +450,8 @@ class Chess extends React.Component {
         let targetY = Number(this.getInfo('battalion').place.slice(0, 1));
         let lineXFind = lineX.findIndex(item => item == targetX);
 
-        // 각각의 말의 특성에 따른
         switch (type) {
-            case 'rook':
-                //TODO 이런식으로 for 문을 네개를.....?
+            case 'king':
                 // 직진
                 for (let i = 1; i < 8; i++) {
                     if (
@@ -366,7 +544,436 @@ class Chess extends React.Component {
 
                 //우
                 for (let i = 1; i < lineX.length; i++) {
-                    console.log('!?', lineX[lineXFind + i], i);
+                    if (
+                        arr.findIndex(
+                            item => item == targetY + '-' + lineX[lineXFind + i]
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + '-' + lineX[lineXFind + i]
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + '-' + lineX[lineXFind + i]
+                            ) !== -1
+                        ) {
+                            movable.push(targetY + '-' + lineX[lineXFind + i]);
+
+                            break;
+                        }
+
+                        movable.push(targetY + '-' + lineX[lineXFind + i]);
+                    }
+                }
+
+                for (let i = 1; i < 9; i++) {
+                    if (
+                        arr.findIndex(
+                            item =>
+                                item == targetY - i + '-' + lineX[lineXFind - i]
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY - i + '-' + lineX[lineXFind - i]
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY - i + '-' + lineX[lineXFind - i]
+                            ) !== -1
+                        ) {
+                            movable.push(
+                                targetY - i + '-' + lineX[lineXFind - i]
+                            );
+                            break;
+                        }
+
+                        movable.push(targetY - i + '-' + lineX[lineXFind - i]);
+                    }
+                }
+
+                // 우 직진
+                for (let i = 1; i < 9; i++) {
+                    if (
+                        arr.findIndex(
+                            item =>
+                                item == targetY - i + '-' + lineX[lineXFind + i]
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY - i + '-' + lineX[lineXFind + i]
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY - i + '-' + lineX[lineXFind + i]
+                            ) !== -1
+                        ) {
+                            movable.push(
+                                targetY - i + '-' + lineX[lineXFind + i]
+                            );
+                            break;
+                        }
+                        movable.push(targetY - i + '-' + lineX[lineXFind + i]);
+                    }
+                }
+
+                //좌 후진
+                for (let i = 1; i < 9; i++) {
+                    if (
+                        arr.findIndex(
+                            item =>
+                                item == targetY + i + '-' + lineX[lineXFind - i]
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + i + '-' + lineX[lineXFind - i]
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + i + '-' + lineX[lineXFind - i]
+                            ) !== -1
+                        ) {
+                            movable.push(
+                                targetY + i + '-' + lineX[lineXFind - i]
+                            );
+                            break;
+                        }
+                        movable.push(targetY + i + '-' + lineX[lineXFind - i]);
+                    }
+                }
+
+                //우 후진
+                for (let i = 1; i < 9; i++) {
+                    if (
+                        arr.findIndex(
+                            item =>
+                                item == targetY + i + '-' + lineX[lineXFind + i]
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + i + '-' + lineX[lineXFind + i]
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + i + '-' + lineX[lineXFind + i]
+                            ) !== -1
+                        ) {
+                            movable.push(
+                                targetY + i + '-' + lineX[lineXFind + i]
+                            );
+
+                            break;
+                        }
+
+                        movable.push(targetY + i + '-' + lineX[lineXFind + i]);
+                    }
+                }
+
+                break;
+
+            case 'queen':
+                for (let i = 0; i < arr.length; i++) {
+                    if (
+                        this.state[game.turn].battalion.findIndex(
+                            item => item.place == arr[i]
+                        ) == -1
+                    ) {
+                        movable.push(arr[i]);
+                    }
+                }
+                break;
+
+            case 'bishop':
+                // 좌 직진
+                for (let i = 1; i < 9; i++) {
+                    if (
+                        arr.findIndex(
+                            item =>
+                                item == targetY - i + '-' + lineX[lineXFind - i]
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY - i + '-' + lineX[lineXFind - i]
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY - i + '-' + lineX[lineXFind - i]
+                            ) !== -1
+                        ) {
+                            movable.push(
+                                targetY - i + '-' + lineX[lineXFind - i]
+                            );
+                            break;
+                        }
+
+                        movable.push(targetY - i + '-' + lineX[lineXFind - i]);
+                    }
+                }
+
+                // 우 직진
+                for (let i = 1; i < 9; i++) {
+                    if (
+                        arr.findIndex(
+                            item =>
+                                item == targetY - i + '-' + lineX[lineXFind + i]
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY - i + '-' + lineX[lineXFind + i]
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY - i + '-' + lineX[lineXFind + i]
+                            ) !== -1
+                        ) {
+                            movable.push(
+                                targetY - i + '-' + lineX[lineXFind + i]
+                            );
+                            break;
+                        }
+                        movable.push(targetY - i + '-' + lineX[lineXFind + i]);
+                    }
+                }
+
+                //좌 후진
+                for (let i = 1; i < 9; i++) {
+                    if (
+                        arr.findIndex(
+                            item =>
+                                item == targetY + i + '-' + lineX[lineXFind - i]
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + i + '-' + lineX[lineXFind - i]
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + i + '-' + lineX[lineXFind - i]
+                            ) !== -1
+                        ) {
+                            movable.push(
+                                targetY + i + '-' + lineX[lineXFind - i]
+                            );
+                            break;
+                        }
+                        movable.push(targetY + i + '-' + lineX[lineXFind - i]);
+                    }
+                }
+
+                //우 후진
+                for (let i = 1; i < 9; i++) {
+                    if (
+                        arr.findIndex(
+                            item =>
+                                item == targetY + i + '-' + lineX[lineXFind + i]
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + i + '-' + lineX[lineXFind + i]
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + i + '-' + lineX[lineXFind + i]
+                            ) !== -1
+                        ) {
+                            movable.push(
+                                targetY + i + '-' + lineX[lineXFind + i]
+                            );
+
+                            break;
+                        }
+
+                        movable.push(targetY + i + '-' + lineX[lineXFind + i]);
+                    }
+                }
+
+                break;
+
+            case 'knight':
+                for (let i = 0; i < arr.length; i++) {
+                    if (
+                        this.state[game.turn].battalion.findIndex(
+                            item => item.place == arr[i]
+                        ) == -1
+                    ) {
+                        movable.push(arr[i]);
+                    }
+                }
+                break;
+
+            case 'rook':
+                // 직진
+                for (let i = 1; i < 8; i++) {
+                    if (
+                        arr.findIndex(
+                            item => item == targetY - i + '-' + targetX
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place == targetY - i + '-' + targetX
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place == targetY - i + '-' + targetX
+                            ) !== -1
+                        ) {
+                            movable.push(targetY - i + '-' + targetX);
+                            break;
+                        }
+
+                        movable.push(targetY - i + '-' + targetX);
+                    }
+                }
+
+                // 후진
+                for (let i = 1; i < 9; i++) {
+                    if (
+                        arr.findIndex(
+                            item => item == targetY + i + '-' + targetX
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place == targetY + i + '-' + targetX
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place == targetY + i + '-' + targetX
+                            ) !== -1
+                        ) {
+                            movable.push(targetY + i + '-' + targetX);
+                            break;
+                        }
+                        movable.push(targetY + i + '-' + targetX);
+                    }
+                }
+
+                //좌
+                for (let i = 1; i <= lineXFind; i++) {
+                    if (
+                        arr.findIndex(
+                            item => item == targetY + '-' + lineX[lineXFind - i]
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + '-' + lineX[lineXFind - i]
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + '-' + lineX[lineXFind - i]
+                            ) !== -1
+                        ) {
+                            movable.push(targetY + '-' + lineX[lineXFind - i]);
+                            break;
+                        }
+                        movable.push(targetY + '-' + lineX[lineXFind - i]);
+                    }
+                }
+
+                //우
+                for (let i = 1; i < lineX.length; i++) {
                     if (
                         arr.findIndex(
                             item => item == targetY + '-' + lineX[lineXFind + i]
@@ -400,12 +1007,18 @@ class Chess extends React.Component {
 
                 break;
 
-            default:
-                movable = arr;
+            case 'pawn':
+                for (let i = 0; i < arr.length; i++) {
+                    if (
+                        this.state[game.turn].battalion.findIndex(
+                            item => item.place == arr[i]
+                        ) == -1
+                    ) {
+                        movable.push(arr[i]);
+                    }
+                }
                 break;
         }
-
-        console.log('!?', movable);
 
         return movable;
     };
