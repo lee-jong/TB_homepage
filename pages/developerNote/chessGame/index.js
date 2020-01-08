@@ -28,6 +28,7 @@ class Chess extends React.Component {
         }
     };
 
+    // 골랐을 경우
     choiceBattalion = e => {
         const { game, white, black } = this.state;
         let value = e.target.textContent;
@@ -65,6 +66,7 @@ class Chess extends React.Component {
         );
     };
 
+    // 이동 했을 경우
     movementBattalion = value => {
         const { white, black } = this.state;
         const { choice, moving } = this.state.game;
@@ -88,12 +90,14 @@ class Chess extends React.Component {
                     firstMove: true
                 };
 
-                if (this.checkedPlace(value) !== undefined) {
+                if (
+                    this.checkedPlace(value) !== undefined &&
+                    Number(choice) !== this.checkedPlace(value)
+                ) {
                     let toCatchIndex = black.battalion.findIndex(
                         i => i.key == this.checkedPlace(value)
                     );
                     black.battalion.splice(toCatchIndex, 1);
-                    console.log('!?', black.battalion);
                 }
 
                 white.battalion.splice(whiteIndex, 1, data);
@@ -154,11 +158,28 @@ class Chess extends React.Component {
         }
     };
 
-    possibleMove = e => {
+    //get Info
+    getInfo = type => {
         const { game, white, black } = this.state;
         let totalArr = white.battalion.concat(black.battalion);
         let findIdx = totalArr.findIndex(i => i.key == game.choice);
         let battalion = totalArr[findIdx];
+
+        if (type == 'battalion') {
+            return battalion;
+        }
+
+        if (type == 'totalArr') {
+            return totalArr;
+        }
+    };
+
+    // 이동 가능 여부 보여주기
+    possibleMove = e => {
+        const { white, black } = this.state;
+        let battalion = this.getInfo('battalion');
+
+        let lineX = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
         let index = '';
         let move = '';
         let move2 = '';
@@ -185,43 +206,208 @@ class Chess extends React.Component {
             case 'knight':
                 break;
             case 'rook':
-                move;
+                let rookArr = [];
+                for (let r = 1; r <= lineX.length; r++) {
+                    rookArr.push(r + move2);
+                }
+
+                for (let r2 = 0; r2 < lineX.length; r2++) {
+                    rookArr.push(move + '-' + lineX[r2]);
+                }
+
+                this.setState({
+                    game: {
+                        ...this.state.game,
+                        moving: this.movableChecked(rookArr, 'rook')
+                    }
+                });
 
                 break;
             case 'pawn':
                 if (battalion.team == 'white') {
+                    let whitePawn = !battalion.firstMove
+                        ? this.state.game.moving.concat(
+                              move - 1 + move2,
+                              move - 2 + move2
+                          )
+                        : this.state.game.moving.concat(move - 1 + move2);
+
                     this.setState({
                         game: {
                             ...this.state.game,
-                            moving: !battalion.firstMove
-                                ? this.state.game.moving.concat(
-                                      move - 1 + move2,
-                                      move - 2 + move2
-                                  )
-                                : this.state.game.moving.concat(
-                                      move - 1 + move2
-                                  )
+                            moving: this.movableChecked(whitePawn)
                         }
                     });
                 }
 
                 if (battalion.team == 'black') {
+                    let blackPawn = !battalion.firstMove
+                        ? this.state.game.moving.concat(
+                              move + 1 + move2,
+                              move + 2 + move2
+                          )
+                        : this.state.game.moving.concat(move + 1 + move2);
+
                     this.setState({
                         game: {
                             ...this.state.game,
-                            moving: !battalion.firstMove
-                                ? this.state.game.moving.concat(
-                                      move + 1 + move2,
-                                      move + 2 + move2
-                                  )
-                                : this.state.game.moving.concat(
-                                      move + 1 + move2
-                                  )
+                            moving: this.movableChecked(blackPawn)
                         }
                     });
                 }
                 break;
         }
+    };
+
+    // 이동 가능 여부 체크
+    movableChecked = (arr, type) => {
+        console.log('arr:::', arr);
+        const { game } = this.state;
+        let movable = [];
+        let lineX = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+        let enemyTeam = game.turn !== 'white' ? 'white' : 'black';
+        let targetX = this.getInfo('battalion').place.slice(2);
+        let targetY = Number(this.getInfo('battalion').place.slice(0, 1));
+        let lineXFind = lineX.findIndex(item => item == targetX);
+
+        // 각각의 말의 특성에 따른
+        switch (type) {
+            case 'rook':
+                //TODO 이런식으로 for 문을 네개를.....?
+                // 직진
+                for (let i = 1; i < 8; i++) {
+                    if (
+                        arr.findIndex(
+                            item => item == targetY - i + '-' + targetX
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place == targetY - i + '-' + targetX
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place == targetY - i + '-' + targetX
+                            ) !== -1
+                        ) {
+                            movable.push(targetY - i + '-' + targetX);
+                            break;
+                        }
+
+                        movable.push(targetY - i + '-' + targetX);
+                    }
+                }
+
+                // 후진
+                for (let i = 1; i < 9; i++) {
+                    if (
+                        arr.findIndex(
+                            item => item == targetY + i + '-' + targetX
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place == targetY + i + '-' + targetX
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place == targetY + i + '-' + targetX
+                            ) !== -1
+                        ) {
+                            movable.push(targetY + i + '-' + targetX);
+                            break;
+                        }
+                        movable.push(targetY + i + '-' + targetX);
+                    }
+                }
+
+                //좌
+                for (let i = 1; i <= lineXFind; i++) {
+                    if (
+                        arr.findIndex(
+                            item => item == targetY + '-' + lineX[lineXFind - i]
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + '-' + lineX[lineXFind - i]
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + '-' + lineX[lineXFind - i]
+                            ) !== -1
+                        ) {
+                            movable.push(targetY + '-' + lineX[lineXFind - i]);
+                            break;
+                        }
+                        movable.push(targetY + '-' + lineX[lineXFind - i]);
+                    }
+                }
+
+                //우
+                for (let i = 1; i < lineX.length; i++) {
+                    console.log('!?', lineX[lineXFind + i], i);
+                    if (
+                        arr.findIndex(
+                            item => item == targetY + '-' + lineX[lineXFind + i]
+                        ) !== -1
+                    ) {
+                        if (
+                            this.state[game.turn].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + '-' + lineX[lineXFind + i]
+                            ) !== -1
+                        ) {
+                            break;
+                        }
+
+                        if (
+                            this.state[enemyTeam].battalion.findIndex(
+                                item =>
+                                    item.place ==
+                                    targetY + '-' + lineX[lineXFind + i]
+                            ) !== -1
+                        ) {
+                            movable.push(targetY + '-' + lineX[lineXFind + i]);
+
+                            break;
+                        }
+
+                        movable.push(targetY + '-' + lineX[lineXFind + i]);
+                    }
+                }
+
+                break;
+
+            default:
+                movable = arr;
+                break;
+        }
+
+        console.log('!?', movable);
+
+        return movable;
     };
 
     render() {
