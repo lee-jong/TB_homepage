@@ -332,10 +332,30 @@ class Chess extends React.Component {
             case 'knight':
                 let knightArr = [];
                 for (let k = 1; k <= 2; k++) {
-                    knightArr.push(move + k + '-' + lineX[findIndex + 1]);
-                    knightArr.push(move + k + '-' + lineX[findIndex - 1]);
-                    knightArr.push(move - k + '-' + lineX[findIndex + 1]);
-                    knightArr.push(move - k + '-' + lineX[findIndex - 1]);
+                    knightArr.push(
+                        move +
+                            k +
+                            '-' +
+                            lineX[k == 1 ? findIndex + 2 : findIndex + 1]
+                    );
+                    knightArr.push(
+                        move +
+                            k +
+                            '-' +
+                            lineX[k == 1 ? findIndex - 2 : findIndex - 1]
+                    );
+                    knightArr.push(
+                        move -
+                            k +
+                            '-' +
+                            lineX[k == 1 ? findIndex + 2 : findIndex + 1]
+                    );
+                    knightArr.push(
+                        move -
+                            k +
+                            '-' +
+                            lineX[k == 1 ? findIndex - 2 : findIndex - 1]
+                    );
                 }
 
                 this.setState({
