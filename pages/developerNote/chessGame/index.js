@@ -83,6 +83,7 @@ class Chess extends React.Component {
     movementBattalion = value => {
         const { white, black } = this.state;
         const { choice, moving } = this.state.game;
+        let getInfo = this.getInfo();
 
         if (moving.findIndex(item => item == value) !== -1) {
             let whiteIndex = white.battalion.findIndex(
@@ -94,26 +95,41 @@ class Chess extends React.Component {
             );
 
             if (whiteIndex !== -1) {
+                let data;
                 let find = white.battalion[whiteIndex];
-                let data = {
-                    key: find.key,
-                    team: find.team,
-                    role: find.role,
-                    place: value,
-                    img: find.img,
-                    firstMove: true
-                };
+                //폰을 킹으로 진화~~
+                if (find.role == 'pawn' && value.slice(0, 1) == 1) {
+                    data = {
+                        key: find.key,
+                        team: find.team,
+                        role: 'king',
+                        place: value,
+                        img: '/static/images/chess/white-king.png',
+                        firstMove: true
+                    };
+                } else {
+                    data = {
+                        key: find.key,
+                        team: find.team,
+                        role: find.role,
+                        place: value,
+                        img: find.img,
+                        firstMove: true
+                    };
+                }
 
                 if (
-                    this.checkedPlace(value) !== undefined &&
-                    Number(choice) !== this.checkedPlace(value)
+                    this.checkedPlace(value, 'key') !== undefined &&
+                    Number(choice) !== this.checkedPlace(value, 'key')
                 ) {
                     let toCatchIndex = black.battalion.findIndex(
-                        i => i.key == this.checkedPlace(value)
+                        i => i.key == this.checkedPlace(value, 'key')
                     );
 
-                    console.log('!?!?!', black.battalion[toCatchIndex].role);
-                    if (black.battalion[toCatchIndex].role == 'queen') {
+                    if (
+                        black.battalion[toCatchIndex].role &&
+                        black.battalion[toCatchIndex].role == 'queen'
+                    ) {
                         return this.setState(
                             {
                                 game: {
@@ -148,19 +164,36 @@ class Chess extends React.Component {
 
             if (blackIndex !== -1) {
                 let find = black.battalion[blackIndex];
-                let data = {
-                    key: find.key,
-                    team: find.team,
-                    role: find.role,
-                    place: value,
-                    img: find.img,
-                    firstMove: true
-                };
+                let data;
 
-                if (this.checkedPlace(value) !== undefined) {
+                if (find.role == 'pawn' && value.slice(0, 1) == 8) {
+                    data = {
+                        key: find.key,
+                        team: find.team,
+                        role: 'king',
+                        place: value,
+                        img: '/static/images/chess/black-king.png',
+                        firstMove: true
+                    };
+                } else {
+                    data = {
+                        key: find.key,
+                        team: find.team,
+                        role: find.role,
+                        place: value,
+                        img: find.img,
+                        firstMove: true
+                    };
+                }
+
+                if (
+                    this.checkedPlace(value, 'key') !== undefined &&
+                    Number(choice) !== this.checkedPlace(value, 'key')
+                ) {
                     let toCatchIndex = white.battalion.findIndex(
-                        i => i.key == this.checkedPlace(value)
+                        i => i.key == this.checkedPlace(value, 'key')
                     );
+
                     if (white.battalion[toCatchIndex].role == 'queen') {
                         return this.setState(
                             {
@@ -341,34 +374,25 @@ class Chess extends React.Component {
                         this.findIndexPlace('black', move - 2 + move2) == -1
                     ) {
                         whitePawn.push(move - 2 + move2);
-                    } else if (
-                        this.findIndexPlace('black', move - 1 + move2) == -1
-                    ) {
+                    }
+
+                    if (this.findIndexPlace('black', move - 1 + move2) == -1) {
                         whitePawn.push(move - 1 + move2);
                     }
 
                     if (
-                        battalion.firstMove &&
-                        this.findIndexPlace('black', move - 1 + move2) == -1
-                    ) {
-                        whitePawn.push(move - 1 + move2);
-                    }
-
-                    if (
-                        black.battalion.findIndex(
-                            item =>
-                                item.place ==
-                                move - 1 + '-' + lineX[findIndex + 1]
+                        this.findIndexPlace(
+                            'black',
+                            move - 1 + '-' + lineX[findIndex + 1]
                         ) !== -1
                     ) {
                         whitePawn.push(move - 1 + '-' + lineX[findIndex + 1]);
                     }
 
                     if (
-                        black.battalion.findIndex(
-                            item =>
-                                item.place ==
-                                move - 1 + '-' + lineX[findIndex - 1]
+                        this.findIndexPlace(
+                            'black',
+                            move - 1 + '-' + lineX[findIndex - 1]
                         ) !== -1
                     ) {
                         whitePawn.push(move - 1 + '-' + lineX[findIndex - 1]);
@@ -390,16 +414,9 @@ class Chess extends React.Component {
                         this.findIndexPlace('white', move + 2 + move2) == -1
                     ) {
                         blackPawn.push(move + 2 + move2);
-                    } else if (
-                        this.findIndexPlace('white', move + 1 + move2) == -1
-                    ) {
-                        blackPawn.push(move + 1 + move2);
                     }
 
-                    if (
-                        battalion.firstMove &&
-                        this.findIndexPlace('white', move + 1 + move2) == -1
-                    ) {
+                    if (this.findIndexPlace('white', move + 1 + move2) == -1) {
                         blackPawn.push(move + 1 + move2);
                     }
 
@@ -441,7 +458,6 @@ class Chess extends React.Component {
 
     // 이동 가능 여부 체크 및 예외 처리
     movableChecked = (arr, type) => {
-        console.log('arr:::', arr);
         const { game } = this.state;
         let movable = [];
         let lineX = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
@@ -1017,6 +1033,7 @@ class Chess extends React.Component {
                         movable.push(arr[i]);
                     }
                 }
+
                 break;
         }
 
