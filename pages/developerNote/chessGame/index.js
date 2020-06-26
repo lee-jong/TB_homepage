@@ -17,7 +17,7 @@ class Chess extends React.Component {
             choice: '',
             moving: [],
             status: 'start',
-            endMessage: '게임 끝!',
+            endMessage: '',
         },
     };
 
@@ -136,6 +136,7 @@ class Chess extends React.Component {
                                 game: {
                                     ...this.state.game,
                                     status: 'end',
+                                    endMessage: '게임 끝!',
                                 },
                             },
                             () => black.battalion.splice(toCatchIndex, 1)
@@ -201,6 +202,7 @@ class Chess extends React.Component {
                                 game: {
                                     ...this.state.game,
                                     status: 'end',
+                                    endMessage: '게임 끝!',
                                 },
                             },
                             () => white.battalion.splice(toCatchIndex, 1)
