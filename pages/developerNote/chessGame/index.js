@@ -7,23 +7,24 @@ import { WhiteTeam, BlackTeam } from '../../../helpers/json/chess';
 class Chess extends React.Component {
     state = {
         white: {
-            battalion: WhiteTeam
+            battalion: WhiteTeam,
         },
         black: {
-            battalion: BlackTeam
+            battalion: BlackTeam,
         },
         game: {
             turn: 'white',
             choice: '',
             moving: [],
-            status: 'start'
-        }
+            status: 'start',
+            endMessage: '게임 끝!',
+        },
     };
 
     checkedPlace = (value, type) => {
         const { white, black } = this.state;
         let totalArr = white.battalion.concat(black.battalion);
-        let findIdx = totalArr.findIndex(item => item.place == value);
+        let findIdx = totalArr.findIndex((item) => item.place == value);
         if (findIdx !== -1) {
             let res = '';
             switch (type) {
@@ -41,19 +42,19 @@ class Chess extends React.Component {
     };
 
     // 골랐을 경우
-    choiceBattalion = value => {
+    choiceBattalion = (value) => {
         const { game, white, black } = this.state;
         // 차례가 맞는지
         if (game.status == 'end') return;
 
         if (
             game.turn == 'white' &&
-            white.battalion.findIndex(i => i.key == value) == -1
+            white.battalion.findIndex((i) => i.key == value) == -1
         )
             return;
         if (
             game.turn == 'black' &&
-            black.battalion.findIndex(i => i.key == value) == -1
+            black.battalion.findIndex((i) => i.key == value) == -1
         )
             return;
 
@@ -62,8 +63,8 @@ class Chess extends React.Component {
                 game: {
                     ...this.state.game,
                     choice: '',
-                    moving: []
-                }
+                    moving: [],
+                },
             });
         }
 
@@ -72,26 +73,26 @@ class Chess extends React.Component {
                 game: {
                     ...this.state.game,
                     choice: value,
-                    moving: []
-                }
+                    moving: [],
+                },
             },
             () => this.possibleMove()
         );
     };
 
     // 이동 했을 경우
-    movementBattalion = value => {
+    movementBattalion = (value) => {
         const { white, black } = this.state;
         const { choice, moving } = this.state.game;
         let getInfo = this.getInfo();
 
-        if (moving.findIndex(item => item == value) !== -1) {
+        if (moving.findIndex((item) => item == value) !== -1) {
             let whiteIndex = white.battalion.findIndex(
-                item2 => item2.key == choice
+                (item2) => item2.key == choice
             );
 
             let blackIndex = black.battalion.findIndex(
-                item3 => item3.key == choice
+                (item3) => item3.key == choice
             );
 
             if (whiteIndex !== -1) {
@@ -105,7 +106,7 @@ class Chess extends React.Component {
                         role: 'king',
                         place: value,
                         img: '/static/images/chess/white-king.png',
-                        firstMove: true
+                        firstMove: true,
                     };
                 } else {
                     data = {
@@ -114,7 +115,7 @@ class Chess extends React.Component {
                         role: find.role,
                         place: value,
                         img: find.img,
-                        firstMove: true
+                        firstMove: true,
                     };
                 }
 
@@ -123,7 +124,7 @@ class Chess extends React.Component {
                     Number(choice) !== this.checkedPlace(value, 'key')
                 ) {
                     let toCatchIndex = black.battalion.findIndex(
-                        i => i.key == this.checkedPlace(value, 'key')
+                        (i) => i.key == this.checkedPlace(value, 'key')
                     );
 
                     if (
@@ -134,8 +135,8 @@ class Chess extends React.Component {
                             {
                                 game: {
                                     ...this.state.game,
-                                    status: 'end'
-                                }
+                                    status: 'end',
+                                },
                             },
                             () => black.battalion.splice(toCatchIndex, 1)
                         );
@@ -147,18 +148,18 @@ class Chess extends React.Component {
                 this.setState({
                     black: {
                         ...this.state.black,
-                        black: black.battalion
+                        black: black.battalion,
                     },
                     white: {
                         ...this.state.white,
-                        battalion: white.battalion
+                        battalion: white.battalion,
                     },
                     game: {
                         ...this.state.game,
                         turn: 'black',
                         choice: '',
-                        moving: []
-                    }
+                        moving: [],
+                    },
                 });
             }
 
@@ -173,7 +174,7 @@ class Chess extends React.Component {
                         role: 'king',
                         place: value,
                         img: '/static/images/chess/black-king.png',
-                        firstMove: true
+                        firstMove: true,
                     };
                 } else {
                     data = {
@@ -182,7 +183,7 @@ class Chess extends React.Component {
                         role: find.role,
                         place: value,
                         img: find.img,
-                        firstMove: true
+                        firstMove: true,
                     };
                 }
 
@@ -191,7 +192,7 @@ class Chess extends React.Component {
                     Number(choice) !== this.checkedPlace(value, 'key')
                 ) {
                     let toCatchIndex = white.battalion.findIndex(
-                        i => i.key == this.checkedPlace(value, 'key')
+                        (i) => i.key == this.checkedPlace(value, 'key')
                     );
 
                     if (white.battalion[toCatchIndex].role == 'queen') {
@@ -199,8 +200,8 @@ class Chess extends React.Component {
                             {
                                 game: {
                                     ...this.state.game,
-                                    status: 'end'
-                                }
+                                    status: 'end',
+                                },
                             },
                             () => white.battalion.splice(toCatchIndex, 1)
                         );
@@ -213,28 +214,28 @@ class Chess extends React.Component {
                 this.setState({
                     black: {
                         ...this.state.black,
-                        battalion: black.battalion
+                        battalion: black.battalion,
                     },
                     white: {
                         ...this.state.white,
-                        battalion: white.battalion
+                        battalion: white.battalion,
                     },
                     game: {
                         ...this.state.game,
                         turn: 'white',
                         choice: '',
-                        moving: []
-                    }
+                        moving: [],
+                    },
                 });
             }
         }
     };
 
     //get Info
-    getInfo = type => {
+    getInfo = (type) => {
         const { game, white, black } = this.state;
         let totalArr = white.battalion.concat(black.battalion);
-        let findIdx = totalArr.findIndex(i => i.key == game.choice);
+        let findIdx = totalArr.findIndex((i) => i.key == game.choice);
         let battalion = totalArr[findIdx];
 
         if (type == 'battalion') {
@@ -247,7 +248,7 @@ class Chess extends React.Component {
     };
 
     // 각각의 말의 특성에 따른 이동 모든 이동 범위
-    possibleMove = e => {
+    possibleMove = (e) => {
         const { white, black } = this.state;
         let battalion = this.getInfo('battalion');
 
@@ -259,19 +260,19 @@ class Chess extends React.Component {
         let findIndex = '';
 
         if (battalion.team == 'white') {
-            index = white.battalion.findIndex(i => i.key == battalion.key);
+            index = white.battalion.findIndex((i) => i.key == battalion.key);
             move = Number(white.battalion[index].place.slice(0, 1));
             move2 = white.battalion[index].place.slice(1);
             move3 = white.battalion[index].place.slice(2);
-            findIndex = lineX.findIndex(item => item == move3);
+            findIndex = lineX.findIndex((item) => item == move3);
         }
 
         if (battalion.team == 'black') {
-            index = black.battalion.findIndex(i => i.key == battalion.key);
+            index = black.battalion.findIndex((i) => i.key == battalion.key);
             move = Number(black.battalion[index].place.slice(0, 1));
             move2 = black.battalion[index].place.slice(1);
             move3 = black.battalion[index].place.slice(2);
-            findIndex = lineX.findIndex(item => item == move3);
+            findIndex = lineX.findIndex((item) => item == move3);
         }
 
         switch (battalion.role) {
@@ -289,8 +290,8 @@ class Chess extends React.Component {
                 this.setState({
                     game: {
                         ...this.state.game,
-                        moving: this.movableChecked(kingArr, 'king')
-                    }
+                        moving: this.movableChecked(kingArr, 'king'),
+                    },
                 });
 
                 break;
@@ -308,8 +309,8 @@ class Chess extends React.Component {
                 this.setState({
                     game: {
                         ...this.state.game,
-                        moving: this.movableChecked(queenArr, 'queen')
-                    }
+                        moving: this.movableChecked(queenArr, 'queen'),
+                    },
                 });
 
                 break;
@@ -324,8 +325,8 @@ class Chess extends React.Component {
                 this.setState({
                     game: {
                         ...this.state.game,
-                        moving: this.movableChecked(bishopArr, 'bishop')
-                    }
+                        moving: this.movableChecked(bishopArr, 'bishop'),
+                    },
                 });
 
                 break;
@@ -361,8 +362,8 @@ class Chess extends React.Component {
                 this.setState({
                     game: {
                         ...this.state.game,
-                        moving: this.movableChecked(knightArr, 'knight')
-                    }
+                        moving: this.movableChecked(knightArr, 'knight'),
+                    },
                 });
 
                 break;
@@ -379,8 +380,8 @@ class Chess extends React.Component {
                 this.setState({
                     game: {
                         ...this.state.game,
-                        moving: this.movableChecked(rookArr, 'rook')
-                    }
+                        moving: this.movableChecked(rookArr, 'rook'),
+                    },
                 });
 
                 break;
@@ -421,8 +422,8 @@ class Chess extends React.Component {
                     this.setState({
                         game: {
                             ...this.state.game,
-                            moving: this.movableChecked(whitePawn, 'pawn')
-                        }
+                            moving: this.movableChecked(whitePawn, 'pawn'),
+                        },
                     });
                 }
 
@@ -461,8 +462,8 @@ class Chess extends React.Component {
                     this.setState({
                         game: {
                             ...this.state.game,
-                            moving: this.movableChecked(blackPawn, 'pawn')
-                        }
+                            moving: this.movableChecked(blackPawn, 'pawn'),
+                        },
                     });
                 }
                 break;
@@ -471,7 +472,7 @@ class Chess extends React.Component {
 
     findIndexPlace = (team, place) => {
         let res = this.state[team].battalion.findIndex(
-            item => item.place == place
+            (item) => item.place == place
         );
         return res;
     };
@@ -484,7 +485,7 @@ class Chess extends React.Component {
         let enemyTeam = game.turn !== 'white' ? 'white' : 'black';
         let targetX = this.getInfo('battalion').place.slice(2);
         let targetY = Number(this.getInfo('battalion').place.slice(0, 1));
-        let lineXFind = lineX.findIndex(item => item == targetX);
+        let lineXFind = lineX.findIndex((item) => item == targetX);
 
         switch (type) {
             case 'king':
@@ -492,12 +493,12 @@ class Chess extends React.Component {
                 for (let i = 1; i < 8; i++) {
                     if (
                         arr.findIndex(
-                            item => item == targetY - i + '-' + targetX
+                            (item) => item == targetY - i + '-' + targetX
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place == targetY - i + '-' + targetX
                             ) !== -1
                         ) {
@@ -506,7 +507,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place == targetY - i + '-' + targetX
                             ) !== -1
                         ) {
@@ -522,12 +523,12 @@ class Chess extends React.Component {
                 for (let i = 1; i < 9; i++) {
                     if (
                         arr.findIndex(
-                            item => item == targetY + i + '-' + targetX
+                            (item) => item == targetY + i + '-' + targetX
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place == targetY + i + '-' + targetX
                             ) !== -1
                         ) {
@@ -536,7 +537,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place == targetY + i + '-' + targetX
                             ) !== -1
                         ) {
@@ -551,12 +552,13 @@ class Chess extends React.Component {
                 for (let i = 1; i <= lineXFind; i++) {
                     if (
                         arr.findIndex(
-                            item => item == targetY + '-' + lineX[lineXFind - i]
+                            (item) =>
+                                item == targetY + '-' + lineX[lineXFind - i]
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + '-' + lineX[lineXFind - i]
                             ) !== -1
@@ -566,7 +568,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + '-' + lineX[lineXFind - i]
                             ) !== -1
@@ -582,12 +584,13 @@ class Chess extends React.Component {
                 for (let i = 1; i < lineX.length; i++) {
                     if (
                         arr.findIndex(
-                            item => item == targetY + '-' + lineX[lineXFind + i]
+                            (item) =>
+                                item == targetY + '-' + lineX[lineXFind + i]
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + '-' + lineX[lineXFind + i]
                             ) !== -1
@@ -597,7 +600,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + '-' + lineX[lineXFind + i]
                             ) !== -1
@@ -614,13 +617,13 @@ class Chess extends React.Component {
                 for (let i = 1; i < 9; i++) {
                     if (
                         arr.findIndex(
-                            item =>
+                            (item) =>
                                 item == targetY - i + '-' + lineX[lineXFind - i]
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY - i + '-' + lineX[lineXFind - i]
                             ) !== -1
@@ -630,7 +633,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY - i + '-' + lineX[lineXFind - i]
                             ) !== -1
@@ -649,13 +652,13 @@ class Chess extends React.Component {
                 for (let i = 1; i < 9; i++) {
                     if (
                         arr.findIndex(
-                            item =>
+                            (item) =>
                                 item == targetY - i + '-' + lineX[lineXFind + i]
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY - i + '-' + lineX[lineXFind + i]
                             ) !== -1
@@ -665,7 +668,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY - i + '-' + lineX[lineXFind + i]
                             ) !== -1
@@ -683,13 +686,13 @@ class Chess extends React.Component {
                 for (let i = 1; i < 9; i++) {
                     if (
                         arr.findIndex(
-                            item =>
+                            (item) =>
                                 item == targetY + i + '-' + lineX[lineXFind - i]
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + i + '-' + lineX[lineXFind - i]
                             ) !== -1
@@ -699,7 +702,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + i + '-' + lineX[lineXFind - i]
                             ) !== -1
@@ -717,13 +720,13 @@ class Chess extends React.Component {
                 for (let i = 1; i < 9; i++) {
                     if (
                         arr.findIndex(
-                            item =>
+                            (item) =>
                                 item == targetY + i + '-' + lineX[lineXFind + i]
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + i + '-' + lineX[lineXFind + i]
                             ) !== -1
@@ -733,7 +736,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + i + '-' + lineX[lineXFind + i]
                             ) !== -1
@@ -755,7 +758,7 @@ class Chess extends React.Component {
                 for (let i = 0; i < arr.length; i++) {
                     if (
                         this.state[game.turn].battalion.findIndex(
-                            item => item.place == arr[i]
+                            (item) => item.place == arr[i]
                         ) == -1
                     ) {
                         movable.push(arr[i]);
@@ -768,13 +771,13 @@ class Chess extends React.Component {
                 for (let i = 1; i < 9; i++) {
                     if (
                         arr.findIndex(
-                            item =>
+                            (item) =>
                                 item == targetY - i + '-' + lineX[lineXFind - i]
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY - i + '-' + lineX[lineXFind - i]
                             ) !== -1
@@ -784,7 +787,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY - i + '-' + lineX[lineXFind - i]
                             ) !== -1
@@ -803,13 +806,13 @@ class Chess extends React.Component {
                 for (let i = 1; i < 9; i++) {
                     if (
                         arr.findIndex(
-                            item =>
+                            (item) =>
                                 item == targetY - i + '-' + lineX[lineXFind + i]
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY - i + '-' + lineX[lineXFind + i]
                             ) !== -1
@@ -819,7 +822,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY - i + '-' + lineX[lineXFind + i]
                             ) !== -1
@@ -837,13 +840,13 @@ class Chess extends React.Component {
                 for (let i = 1; i < 9; i++) {
                     if (
                         arr.findIndex(
-                            item =>
+                            (item) =>
                                 item == targetY + i + '-' + lineX[lineXFind - i]
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + i + '-' + lineX[lineXFind - i]
                             ) !== -1
@@ -853,7 +856,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + i + '-' + lineX[lineXFind - i]
                             ) !== -1
@@ -871,13 +874,13 @@ class Chess extends React.Component {
                 for (let i = 1; i < 9; i++) {
                     if (
                         arr.findIndex(
-                            item =>
+                            (item) =>
                                 item == targetY + i + '-' + lineX[lineXFind + i]
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + i + '-' + lineX[lineXFind + i]
                             ) !== -1
@@ -887,7 +890,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + i + '-' + lineX[lineXFind + i]
                             ) !== -1
@@ -909,7 +912,7 @@ class Chess extends React.Component {
                 for (let i = 0; i < arr.length; i++) {
                     if (
                         this.state[game.turn].battalion.findIndex(
-                            item => item.place == arr[i]
+                            (item) => item.place == arr[i]
                         ) == -1
                     ) {
                         movable.push(arr[i]);
@@ -922,12 +925,12 @@ class Chess extends React.Component {
                 for (let i = 1; i < 8; i++) {
                     if (
                         arr.findIndex(
-                            item => item == targetY - i + '-' + targetX
+                            (item) => item == targetY - i + '-' + targetX
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place == targetY - i + '-' + targetX
                             ) !== -1
                         ) {
@@ -936,7 +939,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place == targetY - i + '-' + targetX
                             ) !== -1
                         ) {
@@ -952,12 +955,12 @@ class Chess extends React.Component {
                 for (let i = 1; i < 9; i++) {
                     if (
                         arr.findIndex(
-                            item => item == targetY + i + '-' + targetX
+                            (item) => item == targetY + i + '-' + targetX
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place == targetY + i + '-' + targetX
                             ) !== -1
                         ) {
@@ -966,7 +969,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place == targetY + i + '-' + targetX
                             ) !== -1
                         ) {
@@ -981,12 +984,13 @@ class Chess extends React.Component {
                 for (let i = 1; i <= lineXFind; i++) {
                     if (
                         arr.findIndex(
-                            item => item == targetY + '-' + lineX[lineXFind - i]
+                            (item) =>
+                                item == targetY + '-' + lineX[lineXFind - i]
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + '-' + lineX[lineXFind - i]
                             ) !== -1
@@ -996,7 +1000,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + '-' + lineX[lineXFind - i]
                             ) !== -1
@@ -1012,12 +1016,13 @@ class Chess extends React.Component {
                 for (let i = 1; i < lineX.length; i++) {
                     if (
                         arr.findIndex(
-                            item => item == targetY + '-' + lineX[lineXFind + i]
+                            (item) =>
+                                item == targetY + '-' + lineX[lineXFind + i]
                         ) !== -1
                     ) {
                         if (
                             this.state[game.turn].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + '-' + lineX[lineXFind + i]
                             ) !== -1
@@ -1027,7 +1032,7 @@ class Chess extends React.Component {
 
                         if (
                             this.state[enemyTeam].battalion.findIndex(
-                                item =>
+                                (item) =>
                                     item.place ==
                                     targetY + '-' + lineX[lineXFind + i]
                             ) !== -1
@@ -1047,7 +1052,7 @@ class Chess extends React.Component {
                 for (let i = 0; i < arr.length; i++) {
                     if (
                         this.state[game.turn].battalion.findIndex(
-                            item => item.place == arr[i]
+                            (item) => item.place == arr[i]
                         ) == -1
                     ) {
                         movable.push(arr[i]);

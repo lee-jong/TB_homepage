@@ -8,7 +8,7 @@ class Board extends React.Component {
             game,
             checkedPlace,
             choiceBattalion,
-            movementBattalion
+            movementBattalion,
         } = this.props;
 
         for (let i = 0; i < 8; i++) {
@@ -21,19 +21,20 @@ class Board extends React.Component {
                                     game.choice &&
                                     'active') ||
                                 (game.moving.findIndex(
-                                    item => item == i + 1 + alphabet[index]
+                                    (item) => item == i + 1 + alphabet[index]
                                 ) !== -1 &&
                                     'moving') ||
                                 (checkedPlace(i + 1 + alphabet[index], 'key') ==
                                     game.choice &&
                                     game.moving.findIndex(
-                                        item => item == i + 1 + alphabet[index]
+                                        (item) =>
+                                            item == i + 1 + alphabet[index]
                                     ) !== -1 &&
                                     'active moving')
                             }
                             onClick={
                                 game.moving.findIndex(
-                                    item => item == i + 1 + alphabet[index]
+                                    (item) => item == i + 1 + alphabet[index]
                                 ) !== -1
                                     ? () =>
                                           movementBattalion(
@@ -76,7 +77,11 @@ class Board extends React.Component {
                 <div className="TB_chess_board_main">
                     <div className="TB_chess_board">{this.createBoard()}</div>
                     <div className="navi">
-                        <h1>{game.turn}차례</h1>
+                        {game.status == 'end' ? (
+                            <h1>{game.turn}차례</h1>
+                        ) : (
+                            <h1>{game.endMessage}</h1>
+                        )}
                     </div>
                 </div>
             </>

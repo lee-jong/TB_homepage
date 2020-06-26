@@ -5,9 +5,14 @@ export const dotdotdot = (text, maxLength = 96) => {
     return text;
 };
 
-export const randomImg = arr => {
+export const arrangeListIndex = (total, active, index) => {
+    let arrangeIndex = total - ((active - 1) * 10 + index);
+    return arrangeIndex;
+};
+
+export const randomImg = (arr) => {
     let newArr = [];
-    arr.map(item => {
+    arr.map((item) => {
         if (item.exposure == false) {
             newArr.push(item);
         }
@@ -15,7 +20,7 @@ export const randomImg = arr => {
     return newArr[Math.floor(Math.random() * newArr.length)];
 };
 
-export const mixItem = arr => {
+export const mixItem = (arr) => {
     let j, x, i;
     for (i = arr.length; i; i -= 1) {
         j = Math.floor(Math.random() * i);
@@ -149,7 +154,7 @@ export const getDate = (date, type) => {
 };
 
 //숫자만
-export const numValid = value => {
+export const numValid = (value) => {
     let isValid = /[^0-9]/g;
     if (isValid.test(value)) return true;
     return false;
